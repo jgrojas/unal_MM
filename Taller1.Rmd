@@ -21,6 +21,9 @@ A continuación se presentan una serie de ejercicios que permitiran interiorizar
 summary(cars)
 ```
 
+Hola
+
+
 ## Including Plots
 
 You can also embed plots, for example:
