@@ -17,5 +17,5 @@ A continuación se presentan una serie de ejercicios que permitiran interiorizar
 
 ### Ejercicio 1
 
-Dada la función $Let$ 
+Hola
 
