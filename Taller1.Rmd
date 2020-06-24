@@ -1,0 +1,32 @@
+---
+title: "Ejercicios para desarrollar en R"
+author: "JRojas, MRamirez, LRomero"
+date: "6/24/2020"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+A continuación se presentan una serie de ejercicios que permitiran interiorizar el manejo de R y su aplicación en operaciones algebraicas. En documento contiene la solución de 25 ejericios que hacen enfasis en el manejo de Algebra Lineal con R.
+
+### Ejercicio 1
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
