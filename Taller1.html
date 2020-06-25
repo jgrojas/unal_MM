@@ -3222,27 +3222,20 @@ desv%*%cor%*%desv</code></pre>
 ## [3,]    4    1    9</code></pre>
 <div id="lucho" class="section level25">
 <p>LUCHO</p>
-<p>#Punto 17</p>
-<pre class="r"><code># Una matriz es idempotente cuando es igual a su cuadrado, es decir A*A = A
-A17 &lt;- matrix(c(2,-1,1,-2,3,-2,-4,4,-3), ncol= 3)
-A17</code></pre>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    2   -2   -4
-## [2,]   -1    3    4
-## [3,]    1   -2   -3</code></pre>
-<pre class="r"><code>A17A17 &lt;- A17%*%A17
-A17A17</code></pre>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    2   -2   -4
-## [2,]   -1    3    4
-## [3,]    1   -2   -3</code></pre>
-<pre class="r"><code>A17 == A17A17</code></pre>
-<pre><code>##      [,1] [,2] [,3]
-## [1,] TRUE TRUE TRUE
-## [2,] TRUE TRUE TRUE
-## [3,] TRUE TRUE TRUE</code></pre>
-<pre class="r"><code>#RESPUESTA: Efectivamente la matriz A17 es idempotente</code></pre>
 <p>#Punto 16</p>
+<p>Dadas las matrices <span class="math inline">\(A16\)</span>:</p>
+<span class="math display">\[\begin{bmatrix}
+1 &amp; -2 &amp; 3\\
+2 &amp; 3 &amp; -1\\
+-3 &amp; 1 &amp; 2
+\end{bmatrix}\]</span>
+<p>y <span class="math inline">\(B16\)</span>:</p>
+<span class="math display">\[\begin{bmatrix}
+1 &amp; 0 &amp; 2\\
+0 &amp; 1 &amp; 2\\
+1 &amp; 2 &amp; 0
+\end{bmatrix}\]</span>
+<p>Muestre que: * <span class="math inline">\(AB\neq BA\)</span></p>
 <pre class="r"><code>A16 &lt;- matrix(c(1,2,-3,-2,3,1,3,-1,2), ncol= 3)
 A16</code></pre>
 <pre><code>##      [,1] [,2] [,3]
@@ -3273,7 +3266,42 @@ B16A16</code></pre>
 ## [2,] FALSE FALSE FALSE
 ## [3,] FALSE FALSE FALSE</code></pre>
 <pre class="r"><code># RESPUESTA: efectivamente los resultados cambian, la multiplicación de matrices no es conmutativa</code></pre>
+<p>#Punto 17</p>
+Demuestre que la matriz <span class="math inline">\(A17\)</span>:
+<span class="math display">\[\begin{bmatrix}
+2 &amp; -2 &amp; -4\\
+-1 &amp; 3 &amp; 4\\
+1 &amp; -2 &amp; -3
+\end{bmatrix}\]</span>
+<p>es idempotente.</p>
+<pre class="r"><code># Una matriz es idempotente cuando es igual a su cuadrado, es decir A*A = A
+A17 &lt;- matrix(c(2,-1,1,-2,3,-2,-4,4,-3), ncol= 3)
+A17</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    2   -2   -4
+## [2,]   -1    3    4
+## [3,]    1   -2   -3</code></pre>
+<pre class="r"><code>A17A17 &lt;- A17%*%A17
+A17A17</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    2   -2   -4
+## [2,]   -1    3    4
+## [3,]    1   -2   -3</code></pre>
+<pre class="r"><code>A17 == A17A17</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,] TRUE TRUE TRUE
+## [2,] TRUE TRUE TRUE
+## [3,] TRUE TRUE TRUE</code></pre>
+<pre class="r"><code>#RESPUESTA: Efectivamente la matriz A17 es idempotente</code></pre>
 <p>#Punto 18</p>
+Demuestre que |
+<span class="math display">\[\begin{array}{cc}
+12 &amp; 5 &amp; -3 &amp; 2\\
+8 &amp; 6 &amp; 4 &amp; 6\\
+8 &amp; 3 &amp; -1 &amp; -1\\
+12 &amp; 4 &amp; 2 &amp; 4
+\end{array}\]</span>
+<p>|=616</p>
 <pre class="r"><code>A18 &lt;- matrix(c(12,8,8,12,5,6,3,4,-3,4,-1,2,2,6,-1,4), ncol= 4)
 A18</code></pre>
 <pre><code>##      [,1] [,2] [,3] [,4]
