@@ -375,7 +375,510 @@ summary {
 <div id="ejercicio-1" class="section level3">
 <h3>Ejercicio 1</h3>
 <p>Dada la función <span class="math inline">\(Let\)</span></p>
+<p>Hola</p>
+<div id="miguel" class="section level22">
+<p>MIGUEL</p>
 </div>
+</div>
+</div>
+<div id="punto-6." class="section level1">
+<h1>Punto 6.</h1>
+<p>Dada la matriz <span class="math inline">\(A\)</span>:</p>
+<span class="math display">\[\begin{bmatrix}
+9 &amp; -2\\
+2 &amp; 6
+\end{bmatrix}\]</span>
+<p>Indicar si: * Simétrica * Definida Positiva</p>
+<pre class="r"><code>A&lt;-matrix(c(9,-2,-2,6), ncol=2, byrow=TRUE)
+
+### SIMETRIA
+
+A == t(A)</code></pre>
+<pre><code>##      [,1] [,2]
+## [1,] TRUE TRUE
+## [2,] TRUE TRUE</code></pre>
+<p>Es simétrica debido a que la matriz es igual a su transpuesta.</p>
+<p>Para indicar si es positiva se definen los vectores <span class="math inline">\(g\)</span>, <span class="math inline">\(m\)</span> y <span class="math inline">\(n\)</span> los cuales corresponden a tres combinaciones del vector:</p>
+<span class="math display">\[\begin{bmatrix}
+8\\
+5
+\end{bmatrix}\]</span>
+<p>Para realizar la multiplicación de su trasnpuesto con la matriz <span class="math inline">\(A\)</span> con el vector, como se observa a continuación:</p>
+<pre class="r"><code>### MATRIZ POSITIVA
+
+g&lt;-c(-8,-5)
+m&lt;-c(8,-5)
+n&lt;-c(-8,5)
+
+t(g)%*%A%*%g</code></pre>
+<pre><code>##      [,1]
+## [1,]  566</code></pre>
+<pre class="r"><code>t(m)%*%A%*%m</code></pre>
+<pre><code>##      [,1]
+## [1,]  886</code></pre>
+<pre class="r"><code>t(n)%*%A%*%n</code></pre>
+<pre><code>##      [,1]
+## [1,]  886</code></pre>
+<p>Se observa que con las tres vectores, el resultado es un valor positivo, por lo que si se puede asumir que la matriz se define positiva.</p>
+</div>
+<div id="punto-7." class="section level1">
+<h1>Punto 7.</h1>
+<p>Dada la matriz del punto 6 definir:</p>
+<ul>
+<li>Determinar los valores y vectores propios</li>
+<li>Encontrar la inversa</li>
+<li>Encontrar los valores y vectores propios de la matriz inversa</li>
+</ul>
+<pre class="r"><code>eigen(A)</code></pre>
+<pre><code>## eigen() decomposition
+## $values
+## [1] 10  5
+## 
+## $vectors
+##            [,1]       [,2]
+## [1,] -0.8944272 -0.4472136
+## [2,]  0.4472136 -0.8944272</code></pre>
+<p>Con la función eigen se obtiene los valores y vectores propios de la matriz <span class="math inline">\(A\)</span></p>
+<pre class="r"><code>solve(A)</code></pre>
+<pre><code>##      [,1] [,2]
+## [1,] 0.12 0.04
+## [2,] 0.04 0.18</code></pre>
+<p>Con la función solve se obtiene la matriz inversa de <span class="math inline">\(A\)</span></p>
+<pre class="r"><code>eigen(solve(A))</code></pre>
+<pre><code>## eigen() decomposition
+## $values
+## [1] 0.2 0.1
+## 
+## $vectors
+##           [,1]       [,2]
+## [1,] 0.4472136 -0.8944272
+## [2,] 0.8944272  0.4472136</code></pre>
+<p>Con la función eigen y solve se obtiene los valores y vectores propios de la matriz inversa de <span class="math inline">\(A\)</span></p>
+</div>
+<div id="punto-8." class="section level1">
+<h1>Punto 8.</h1>
+<p>Dada la matriz <span class="math inline">\(A\)</span>:</p>
+<span class="math display">\[\begin{bmatrix}
+1 &amp; 2\\
+2 &amp; -2
+\end{bmatrix}\]</span>
+<p>Encontrar: * Matriz Inversa * Valores y vectores propios de la matriz inversa</p>
+<pre class="r"><code>A&lt;-matrix(c(1,2,2,-2), ncol=2, byrow=TRUE)
+
+solve(A)</code></pre>
+<pre><code>##           [,1]       [,2]
+## [1,] 0.3333333  0.3333333
+## [2,] 0.3333333 -0.1666667</code></pre>
+<pre class="r"><code>eigen(solve(A))</code></pre>
+<pre><code>## eigen() decomposition
+## $values
+## [1]  0.5000000 -0.3333333
+## 
+## $vectors
+##            [,1]       [,2]
+## [1,] -0.8944272  0.4472136
+## [2,] -0.4472136 -0.8944272</code></pre>
+</div>
+<div id="punto-10." class="section level1">
+<h1>Punto 10.</h1>
+<p>Dada la matriz <span class="math inline">\(A\)</span>:</p>
+<span class="math display">\[\begin{bmatrix}
+4 &amp; 4.001\\
+4.001 &amp; 4.002
+\end{bmatrix}\]</span>
+<p>Dada la matriz <span class="math inline">\(B\)</span>:</p>
+<span class="math display">\[\begin{bmatrix}
+4 &amp; 4.001\\
+4.001 &amp; 4.002001
+\end{bmatrix}\]</span>
+<p>Se observa que en la posición <span class="math inline">\((2,2)\)</span> poseen una diferencia significativamente pequeña, sin embargo las columnas de las dos columnas son muy cercanas a ser dependientes. Demuestre que <span class="math inline">\(A^{-1} = -3B^{-1}\)</span> con el propósito de tener en cuenta que los resultados cambian en estas situaciones.</p>
+<pre class="r"><code>A&lt;-matrix(c(4,4.001,4.001,4.002), ncol=2, byrow=TRUE)
+B&lt;-matrix(c(4,4.001,4.001,4.002001), ncol=2, byrow=TRUE)
+
+solve(A) == -3*solve(B)</code></pre>
+<pre><code>##       [,1]  [,2]
+## [1,] FALSE FALSE
+## [2,] FALSE FALSE</code></pre>
+<pre class="r"><code>solve(A)</code></pre>
+<pre><code>##          [,1]     [,2]
+## [1,] -4002000  4001000
+## [2,]  4001000 -4000000</code></pre>
+<pre class="r"><code>-3*solve(B)</code></pre>
+<pre><code>##          [,1]     [,2]
+## [1,] -4002001  4001000
+## [2,]  4001000 -4000000</code></pre>
+<p>Apesar de que el operador lógico indica que los valores no son iguales, al observar las dos matrices por separado, se ve que se puede considerar que son identicas.</p>
+</div>
+<div id="punto-11." class="section level1">
+<h1>Punto 11.</h1>
+<pre class="r"><code>A&lt;-matrix(c(5,0,0,0,0,1,0,0,0,0,3,0,0,0,4), ncol=4, byrow=TRUE)</code></pre>
+<pre><code>## Warning in matrix(c(5, 0, 0, 0, 0, 1, 0, 0, 0, 0, 3, 0, 0, 0, 4), ncol = 4, : la
+## longitud de los datos [15] no es un submúltiplo o múltiplo del número de filas
+## [4] en la matriz</code></pre>
+<pre class="r"><code>### Funcion para multiplicar elementos de un vector
+
+product &lt;- function(vec){
+  out &lt;- 1
+  for(i in 1:length(vec)){
+    out &lt;- out*vec[i]
+  }
+  out
+}
+
+det(A)</code></pre>
+<pre><code>## [1] 75</code></pre>
+<pre class="r"><code>diag(A)  </code></pre>
+<pre><code>## [1] 5 1 3 5</code></pre>
+<pre class="r"><code>det(A) == product(diag(A))</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+</div>
+<div id="punto-12." class="section level1">
+<h1>Punto 12.</h1>
+<pre class="r"><code>A&lt;-matrix(c(0,1,2,3,1,0,4,5,2,4,0,6,3,5,6,0), ncol=4, byrow=TRUE)
+
+d&lt;-eigen(A)
+
+det(A) == product(d$values)</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+</div>
+<div id="punto-13." class="section level1">
+<h1>Punto 13.</h1>
+<p>Indicar si <span class="math inline">\(3x_1^{2} + 3x_2^{2} - 2x_1x_2\)</span> es una forma cuadrática.</p>
+<p>Como primera medida se construye la matriz <span class="math inline">\(A\)</span>:</p>
+<pre class="r"><code>A&lt;-matrix(c(3,-1,-1,3), ncol=2, byrow=TRUE)</code></pre>
+<p>Se valida que el determinante de la matriz <span class="math inline">\(A\)</span> sea igual a la multiplicación de sus valores propios:</p>
+<pre class="r"><code>d&lt;-eigen(A)
+det(A) == product(d$values)</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="r"><code>det(A)</code></pre>
+<pre><code>## [1] 8</code></pre>
+<pre class="r"><code>product(d$values)</code></pre>
+<pre><code>## [1] 8</code></pre>
+<p>Se toma el mismo ejemplo del punto 6 para validar si es una forma cuadrática:</p>
+<pre class="r"><code>g&lt;-c(-8,-5)
+m&lt;-c(8,-5)
+n&lt;-c(-8,5)
+
+t(g)%*%A%*%g</code></pre>
+<pre><code>##      [,1]
+## [1,]  187</code></pre>
+<pre class="r"><code>t(m)%*%A%*%m</code></pre>
+<pre><code>##      [,1]
+## [1,]  347</code></pre>
+<pre class="r"><code>t(n)%*%A%*%n</code></pre>
+<pre><code>##      [,1]
+## [1,]  347</code></pre>
+<p>El resultado indica que si se puede considerar como una.</p>
+</div>
+<div id="punto-14." class="section level1">
+<h1>Punto 14.</h1>
+<p>Dada la matriz <span class="math inline">\(A\)</span>:</p>
+<span class="math display">\[\begin{bmatrix}
+4 &amp; 0 &amp; 0\\
+0 &amp; 9 &amp; 0\\
+0 &amp; 0 &amp; 1
+\end{bmatrix}\]</span>
+<p>Encontrar: * <span class="math inline">\(\sum^{-1}\)</span> * Los valores propios de <span class="math inline">\(\sum\)</span> * Los valores propios de <span class="math inline">\(\sum^{-1}\)</span></p>
+<pre class="r"><code>A&lt;-matrix(c(4,0,0,0,9,0,0,0,1), ncol=3, byrow=TRUE)
+
+d&lt;-var(A) ##Matriz Varianza y Covarianza
+
+eigen(d)</code></pre>
+<pre><code>## eigen() decomposition
+## $values
+## [1]  2.860910e+01  4.057567e+00 -2.220446e-16
+## 
+## $vectors
+##             [,1]       [,2]      [,3]
+## [1,]  0.24813857  0.9382320 0.2411387
+## [2,] -0.96765623  0.2283756 0.1071728
+## [3,]  0.04548271 -0.2599331 0.9645549</code></pre>
+</div>
+<div id="punto-15." class="section level1">
+<h1>Punto 15.</h1>
+<p>Dada la matriz <span class="math inline">\(\sum\)</span>:</p>
+<span class="math display">\[\begin{bmatrix}
+25 &amp; -2 &amp; 4\\
+-2 &amp; 4 &amp; 1\\
+4 &amp; 1 &amp; 9
+\end{bmatrix}\]</span>
+<p>Encontrar: * Las matrices <span class="math inline">\(\rho\)</span> y <span class="math inline">\(V^{1/2}\)</span> * Demuestre que <span class="math inline">\(V^{1/2} \rho V^{1/2} = \sum\)</span></p>
+<pre class="r"><code>## A
+
+A&lt;-matrix(c(25,-2,4,-2,4,1,4,1,9), ncol=3, byrow=TRUE)
+desv&lt;-diag(diag(A^0.5),3,3) ##Matriz Desviacion Estándar
+desv</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    5    0    0
+## [2,]    0    2    0
+## [3,]    0    0    3</code></pre>
+<pre class="r"><code>cor&lt;-solve(desv)%*%A%*%solve(desv) ## Matriz de Correlacción
+cor</code></pre>
+<pre><code>##            [,1]       [,2]      [,3]
+## [1,]  1.0000000 -0.2000000 0.2666667
+## [2,] -0.2000000  1.0000000 0.1666667
+## [3,]  0.2666667  0.1666667 1.0000000</code></pre>
+<pre class="r"><code>## B
+
+desv%*%cor%*%desv</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]   25   -2    4
+## [2,]   -2    4    1
+## [3,]    4    1    9</code></pre>
+<div id="lucho" class="section level25">
+<p>LUCHO</p>
+<p>#Punto 17</p>
+<pre class="r"><code># Una matriz es idempotente cuando es igual a su cuadrado, es decir A*A = A
+A17 &lt;- matrix(c(2,-1,1,-2,3,-2,-4,4,-3), ncol= 3)
+A17</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    2   -2   -4
+## [2,]   -1    3    4
+## [3,]    1   -2   -3</code></pre>
+<pre class="r"><code>A17A17 &lt;- A17%*%A17
+A17A17</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    2   -2   -4
+## [2,]   -1    3    4
+## [3,]    1   -2   -3</code></pre>
+<pre class="r"><code>A17 == A17A17</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,] TRUE TRUE TRUE
+## [2,] TRUE TRUE TRUE
+## [3,] TRUE TRUE TRUE</code></pre>
+<pre class="r"><code>#RESPUESTA: Efectivamente la matriz A17 es idempotente</code></pre>
+<p>#Punto 16</p>
+<pre class="r"><code>A16 &lt;- matrix(c(1,2,-3,-2,3,1,3,-1,2), ncol= 3)
+A16</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1   -2    3
+## [2,]    2    3   -1
+## [3,]   -3    1    2</code></pre>
+<pre class="r"><code>B16 &lt;- matrix(c(1,0,1,0,1,2,2,2,0), ncol= 3)
+B16</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    0    2
+## [2,]    0    1    2
+## [3,]    1    2    0</code></pre>
+<pre class="r"><code>A16B16 &lt;- A16%*%B16
+A16B16</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    4    4   -2
+## [2,]    1    1   10
+## [3,]   -1    5   -4</code></pre>
+<pre class="r"><code>B16A16 &lt;- B16%*%A16
+B16A16</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]   -5    0    7
+## [2,]   -4    5    3
+## [3,]    5    4    1</code></pre>
+<pre class="r"><code>A16B16 == B16A16</code></pre>
+<pre><code>##       [,1]  [,2]  [,3]
+## [1,] FALSE FALSE FALSE
+## [2,] FALSE FALSE FALSE
+## [3,] FALSE FALSE FALSE</code></pre>
+<pre class="r"><code># RESPUESTA: efectivamente los resultados cambian, la multiplicación de matrices no es conmutativa</code></pre>
+<p>#Punto 18</p>
+<pre class="r"><code>A18 &lt;- matrix(c(12,8,8,12,5,6,3,4,-3,4,-1,2,2,6,-1,4), ncol= 4)
+A18</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]   12    5   -3    2
+## [2,]    8    6    4    6
+## [3,]    8    3   -1   -1
+## [4,]   12    4    2    4</code></pre>
+<pre class="r"><code>A18det &lt;- det(A18)
+A18det # 616</code></pre>
+<pre><code>## [1] 616</code></pre>
+<pre class="r"><code># Efectivamente la respuesta es 616</code></pre>
+<p>#Punto 19</p>
+<pre class="r"><code>A19 &lt;- matrix(c(1,2,3,2,4,1,1,6,2), ncol= 3)
+A19</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    2    1
+## [2,]    2    4    6
+## [3,]    3    1    2</code></pre>
+<pre class="r"><code>B19 &lt;- matrix(c(-1,2,3,2,-1,4,-3,4,1), ncol= 3)
+B19</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]   -1    2   -3
+## [2,]    2   -1    4
+## [3,]    3    4    1</code></pre>
+<pre class="r"><code>A19B19 &lt;- A19%*%B19
+A19B19</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    6    4    6
+## [2,]   24   24   16
+## [3,]    5   13   -3</code></pre>
+<pre class="r"><code>A19B19det &lt;- det(A19B19)
+A19B19det #80</code></pre>
+<pre><code>## [1] 80</code></pre>
+<pre class="r"><code>A19det &lt;- det(A19)
+A19det</code></pre>
+<pre><code>## [1] 20</code></pre>
+<pre class="r"><code>B19det &lt;- det(B19)
+B19det</code></pre>
+<pre><code>## [1] 4</code></pre>
+<pre class="r"><code>A19det*B19det#80</code></pre>
+<pre><code>## [1] 80</code></pre>
+<pre class="r"><code>#RESPUESTA: se cumple la relación y en ambos casos el resultado es 80</code></pre>
+<p>#Punto 20</p>
+<pre class="r"><code>A20 &lt;- matrix(c(-1,4,4,2,-3,-4,-2,4,5), ncol= 3)
+A20</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]   -1    2   -2
+## [2,]    4   -3    4
+## [3,]    4   -4    5</code></pre>
+<pre class="r"><code>A20inv &lt;- solve(A20)
+A20inv</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]   -1    2   -2
+## [2,]    4   -3    4
+## [3,]    4   -4    5</code></pre>
+<pre class="r"><code># En este caso se cumple con la igualdad</code></pre>
+<p>#Punto 21</p>
+<pre class="r"><code>A21 &lt;- matrix(c(1,2,1,-1,-1,0,1,0,1), ncol= 3)
+A21</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1   -1    1
+## [2,]    2   -1    0
+## [3,]    1    0    1</code></pre>
+<pre class="r"><code># Pruebe que A^2 = A^-1
+
+A21A21 &lt;- A21%*%A21
+A21A21</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    0    0    2
+## [2,]    0   -1    2
+## [3,]    2   -1    2</code></pre>
+<pre class="r"><code>A21inv &lt;- solve(A21)
+A21inv</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,] -0.5  0.5  0.5
+## [2,] -1.0  0.0  1.0
+## [3,]  0.5 -0.5  0.5</code></pre>
+<pre class="r"><code>A21A21 == A21inv</code></pre>
+<pre><code>##       [,1]  [,2]  [,3]
+## [1,] FALSE FALSE FALSE
+## [2,] FALSE FALSE FALSE
+## [3,] FALSE FALSE FALSE</code></pre>
+<pre class="r"><code># El cuadrado de una matriz no es equivalente a su inversa</code></pre>
+<p>#Punto 22</p>
+<pre class="r"><code>A22 &lt;- matrix(c(2,1,3,1,1,2,3,-1,3,-1,2,4,1,4,5,-3), ncol= 4)
+A22</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    2    1    3    1
+## [2,]    1    2   -1    4
+## [3,]    3    3    2    5
+## [4,]    1   -1    4   -3</code></pre>
+<pre class="r"><code>#A22inv &lt;- solve(A22)
+
+# RESPUESTA, la matriz es singular, por lo que no es invertible
+
+A22vv &lt;- eigen(A22)
+A22vv</code></pre>
+<pre><code>## eigen() decomposition
+## $values
+## [1]  7.178908e+00 -4.178908e+00  1.015404e-15  1.470801e-16
+## 
+## $vectors
+##            [,1]       [,2]        [,3]       [,4]
+## [1,] -0.5373491  0.1632194  0.02271781 -0.7157826
+## [2,] -0.2111618 -0.5537985  0.86717920 -0.3167875
+## [3,] -0.7485109 -0.3905791 -0.14564485  0.4341579
+## [4,] -0.3261873  0.7170179 -0.47568026  0.4458788</code></pre>
+<pre class="r"><code>rA22 &lt;- qr(A22)
+rA22$rank</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code># RESPUESTA, dado que la matriz cuadrada tiene dos valores propios diferentes a 0, entonces el rango
+# de la matriz es de 2. Esto se comprueba con el comando qr() y el paquete matlib</code></pre>
+<p>#Punto 23</p>
+<pre class="r"><code>A23 &lt;- matrix(c(1,2,3,1,-3,-2,-1,4,3), ncol= 3)
+A23</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    1   -1
+## [2,]    2   -3    4
+## [3,]    3   -2    3</code></pre>
+<pre class="r"><code>B23 &lt;- matrix(c(-1,6,5,-1,12,10,-1,6,5), ncol= 3)
+B23</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]   -1   -1   -1
+## [2,]    6   12    6
+## [3,]    5   10    5</code></pre>
+<pre class="r"><code>A23B23 &lt;- A23%*%B23
+A23B23</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    0    1    0
+## [2,]    0    2    0
+## [3,]    0    3    0</code></pre>
+<pre class="r"><code>rA23B23 &lt;- qr(A23B23) 
+rA23B23$rank # Rango 1</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="r"><code>B23A23 &lt;- B23%*%A23
+B23A23</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]   -6    4   -6
+## [2,]   48  -42   60
+## [3,]   40  -35   50</code></pre>
+<pre class="r"><code>rB23A23 &lt;- qr(B23A23)
+rB23A23$rank # Rango 2</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code># RESPUESTA: efectivamente, los rangos son diferentes, demostrando nuevamente que la multiplicación
+# de matrices no es conmutativa.</code></pre>
+<p>#Punto 24</p>
+<pre class="r"><code># Recuerda: EL rango de una matriz corresponde al número de filas o columnas linealmente independientes
+A24 &lt;- matrix(c(6,4,10,16,1,2,3,4,3,6,9,12,8,-1,7,15), ncol= 4)
+A24</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    6    1    3    8
+## [2,]    4    2    6   -1
+## [3,]   10    3    9    7
+## [4,]   16    4   12   15</code></pre>
+<pre class="r"><code>rA24 &lt;- qr(A24) 
+rA24$rank # Rango 2</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>B24 &lt;- matrix(c(1,2,5,2,3,8,3,4,11,4,5,14,5,1,7), ncol= 5)
+B24</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    2    3    4    5
+## [2,]    2    3    4    5    1
+## [3,]    5    8   11   14    7</code></pre>
+<pre class="r"><code>rB24 &lt;- qr(B24) 
+rB24$rank # Rango 2</code></pre>
+<pre><code>## [1] 2</code></pre>
+</div>
+</div>
+<div id="punto-25." class="section level1">
+<h1>Punto 25.</h1>
+<pre class="r"><code>require(MASS)</code></pre>
+<pre><code>## Loading required package: MASS</code></pre>
+<pre class="r"><code>A25 &lt;- matrix(c(1,3,2,2,6,4), ncol=3, byrow=TRUE)
+A25</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    3    2
+## [2,]    2    6    4</code></pre>
+<pre class="r"><code>G251 &lt;- matrix(c(1,0,0,0,0,0), ncol=2, byrow=TRUE)
+G251</code></pre>
+<pre><code>##      [,1] [,2]
+## [1,]    1    0
+## [2,]    0    0
+## [3,]    0    0</code></pre>
+<pre class="r"><code>G252 &lt;-matrix(c(-42,-1,5,3,2,2), ncol=2, byrow=TRUE)
+G252</code></pre>
+<pre><code>##      [,1] [,2]
+## [1,]  -42   -1
+## [2,]    5    3
+## [3,]    2    2</code></pre>
+<pre class="r"><code>#Para saber si corresponden a inversas generalizadas, debe cumplirse la propiedad AA-A= A, siendo A- cualquiera de las matrices inversas propuestas.
+
+A25%*%G251%*%A25 == A25</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,] TRUE TRUE TRUE
+## [2,] TRUE TRUE TRUE</code></pre>
+<pre class="r"><code>A25%*%G252%*%A25 == A25</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,] TRUE TRUE TRUE
+## [2,] TRUE TRUE TRUE</code></pre>
+<pre class="r"><code>#Dado que se cumple la propiedad, podemos afirmar que las matrices G251 y G252 son inversas generalizadas de A25 </code></pre>
 </div>
 
 
