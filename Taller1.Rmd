@@ -32,13 +32,13 @@ library(matrixcalc)
 require(MASS)
 ```
 
-# Punto 1 
+# Punto 1.
 
-### Dada la información siguiente, resuelva:
+Dada la información siguiente, resuelva:
 
-![](Taller1_img\Ejercicio1.jpg)
+$X=[5,1,3] , Y=[-1,3,1]$
 
-### a) Graficar los dos vectores
+a) Graficar los dos vectores
 
 ```{r}
 
@@ -51,7 +51,7 @@ scatterplot3d(x,y)
 
 ```
 
-### b) Encontrar a partir de los vectores datos: i) largo de x; ii) ángulo (x, y)
+b) Encontrar a partir de los vectores datos: i) largo de x; ii) ángulo (x, y)
 
 ```{r}
 
@@ -76,14 +76,28 @@ fi=acos(cosfi);fi
 
 ```
 
-### c) 
+c) Desde $\bar{x}=3$ y $\bar{y}=1$, gráfique $[5 - 3,1-3,3-3]=[2,(-2),0]$ y $[(-1) - 1,3-1,1-1]=[(-2),2,0]$ 
+
+```{r}
+xbarra <- t(c(3,3,3))
+ybarra <- t(c(1,1,1))
+
+v1 <- x-xbarra
+
+v2 <- y-ybarra
+
+v1x <- c(2,-2)
+v2y <- c(-2,2)
+v3z <- c(0,0)
+
+scatterplot3d(v1x, v2y, v3z)
+
+```
 
 
+# Punto 2.
 
-
-# Punto 2
-
-### Dada las siguiente matrices
+Dada las siguiente matrices
 
 \[A=\begin{bmatrix}-1 & 3\\ 4 & 2\end{bmatrix}, B=\begin{bmatrix}4  & -3 \\ 1 & -2 \\ -2 & 0\end{bmatrix}, C=\begin{bmatrix}5 \\ -4 \\ 2\end{bmatrix}\]
 
@@ -128,9 +142,9 @@ try(A%*%B)
 #No está definida por la dimensión de las matrices
 ```
 
-# Punto 3
+# Punto 3.
 
-### Verifique las siguientes propiedades de la matriz transpuesta cuando:
+Verifique las siguientes propiedades de la matriz transpuesta cuando:
 
 \[A=\begin{bmatrix}2  & 1\\ 1 & 3\end{bmatrix}, B=\begin{bmatrix}1  & 4 & 2\\ 5 & 0 & 3\end{bmatrix}, C=\begin{bmatrix}1  & 4\\ 3 & 2\end{bmatrix}\]
 
@@ -140,13 +154,13 @@ B = matrix(c(1,4,2,5,0,3), ncol=3, byrow=TRUE)
 C = matrix(c(1,4,3,2), ncol=2, byrow=TRUE)
 ```
 
-### a) $(A^T)^T=A$
+a) $(A^T)^T=A$
 
 ```{r}
 t(t(A)) #Es la misma A
 ```
 
-### b) $(C^T)^-1=(C^-1)^T$
+b) $(C^T)^-1=(C^-1)^T$
 
 ```{r}
 D=matrix.inverse(t(C));D 
@@ -155,7 +169,8 @@ E=t(matrix.inverse(C));E
 D==E
 ```
 
-### c) $(AB)^T=A^TB^T$
+c) $(AB)^T=A^TB^T$
+
 ```{r}
 D=t(A%*%B)
 E=t(B)%*%t(A)
@@ -163,33 +178,30 @@ D==E # El restultado es que son iguales
 ```
 
 
-# Punto 4
+# Punto 4.
 
-### Cuando $A^-1$ and $B^-1$ existen, pruebe lo siguiente:
+Cuando $A^-1$ and $B^-1$ existen, pruebe lo siguiente:
 
-
-### a) $(A^T)^-1=(A^-1)^T$
+a) $(A^T)^-1=(A^-1)^T$
 
 ```{r}
 matrix.inverse(t(A))==t(matrix.inverse(A)) #Correcto, la validación es verdadera 
 
 ``` 
 
-### b) $(AB)^-1=B^-1A^-1$
+b) $(AB)^-1=B^-1A^-1$
 
 ```{r}
 try(matrix.inverse(A%*%B)==(matrix.inverse(B))%*%(matrix.inverse(A))) # La matrix B no es cuadrada
 ```
 
-# Punto 5
+# Punto 5.
 
-### Verifique que:
+Verifique que:
 
 \[Q=\begin{bmatrix}\frac{5}{13}  & \frac{12}{13}\\ -\frac{12}{13} & \frac{5}{13}\end{bmatrix}\]
 
-
-
-### Es una matriz ortogonal
+Es una matriz ortogonal
 
 ```{r}
 
