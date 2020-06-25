@@ -163,6 +163,30 @@ D==E # El restultado es que son iguales
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ###################### MIGUEL
 
 # Punto 6. 
