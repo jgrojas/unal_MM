@@ -7,6 +7,7 @@ output:
     df_print: paged
     toc: yes
     toc_depth: '1'
+    toc_float: yes
   bookdown::html_document2:
     number_sections: no
     toc: yes
@@ -165,7 +166,6 @@ D==E # El restultado es que son iguales
 
 ### Cuando $A^-1$ and $B^-1$ existen, pruebe lo siguiente:
 
-![](Taller1_img\Ejercicio4.jpg)
 
 ### a) $(A^T)^-1=(A^-1)^T$
 
@@ -180,28 +180,22 @@ matrix.inverse(t(A))==t(matrix.inverse(A)) #Correcto, la validación es verdader
 try(matrix.inverse(A%*%B)==(matrix.inverse(B))%*%(matrix.inverse(A))) # La matrix B no es cuadrada
 ```
 
+# Punto 5
 
+### Verifique que:
 
+![](Taller1_img\Ejercicio5.jpg)
 
+### Es una matriz ortogonal
 
+```{r}
 
+Q=matrix(c(5/13,12/13,-(12/13),5/13),nrow = 2, byrow = TRUE)
+#Para probar se multiplica por la transpuesta
+Q%*%t(Q) 
+#Como el resultado es la idéntica se define que es ortogonal
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-###################### MIGUEL
+```
 
 # Punto 6. 
 
