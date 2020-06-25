@@ -2789,7 +2789,7 @@ div.tocify {
 
 <div id="introducción" class="section level1">
 <h1>Introducción</h1>
-<p>A continuación se presentan una serie de ejercicios que permitiran interiorizar el manejo de R y su aplicación en operaciones algebraicas. En documento contiene la solución de 25 ejericios que hacen enfasis en el manejo de Algebra Lineal con R.</p>
+<p>A continuación se presentan una serie de ejercicios que permitiran interiorizar el manejo de R y su aplicación en operaciones algebraicas. El documento contiene la solución de 25 ejercicios que hacen énfasis en el manejo de Algebra Lineal con R y hacen parte del contenido académico desarrollado por el profesor Aquiles Enrique Darghan Contreras.</p>
 <p>Previo a la solución de los ejercicios es necesario instalar y cargar las siguientes librerías.</p>
 <pre class="r"><code>library(scatterplot3d)
 library(matrixcalc)
@@ -2839,7 +2839,6 @@ fi=acos(cosfi);fi</code></pre>
 ybarra &lt;- t(c(1,1,1))
 
 v1 &lt;- x-xbarra
-
 v2 &lt;- y-ybarra
 
 v1x &lt;- c(2,-2)
@@ -3220,119 +3219,71 @@ desv%*%cor%*%desv</code></pre>
 ## [1,]   25   -2    4
 ## [2,]   -2    4    1
 ## [3,]    4    1    9</code></pre>
-<div id="lucho" class="section level25">
-<p>LUCHO</p>
-<p>#Punto 16</p>
-<p>Dadas las matrices <span class="math inline">\(A16\)</span>:</p>
-<span class="math display">\[\begin{bmatrix}
-1 &amp; -2 &amp; 3\\
-2 &amp; 3 &amp; -1\\
--3 &amp; 1 &amp; 2
-\end{bmatrix}\]</span>
-<p>y <span class="math inline">\(B16\)</span>:</p>
-<span class="math display">\[\begin{bmatrix}
-1 &amp; 0 &amp; 2\\
-0 &amp; 1 &amp; 2\\
-1 &amp; 2 &amp; 0
-\end{bmatrix}\]</span>
-<p>Muestre que: * <span class="math inline">\(AB\neq BA\)</span></p>
+</div>
+<div id="punto-16" class="section level1">
+<h1>Punto 16</h1>
+<p>Dadas las matrices:</p>
+<p><span class="math display">\[A16=\begin{bmatrix}1 &amp; -2 &amp; 3\\2 &amp; 3 &amp; -1\\-3 &amp; 1 &amp; 2\end{bmatrix},B16=\begin{bmatrix}1 &amp; 0 &amp; 2\\0 &amp; 1 &amp; 2\\1 &amp; 2 &amp; 0\end{bmatrix}\]</span></p>
+<p>Muestre que: * <span class="math inline">\(A16B16\neq B16A16\)</span></p>
 <pre class="r"><code>A16 &lt;- matrix(c(1,2,-3,-2,3,1,3,-1,2), ncol= 3)
-A16</code></pre>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    1   -2    3
-## [2,]    2    3   -1
-## [3,]   -3    1    2</code></pre>
-<pre class="r"><code>B16 &lt;- matrix(c(1,0,1,0,1,2,2,2,0), ncol= 3)
-B16</code></pre>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    1    0    2
-## [2,]    0    1    2
-## [3,]    1    2    0</code></pre>
-<pre class="r"><code>A16B16 &lt;- A16%*%B16
-A16B16</code></pre>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    4    4   -2
-## [2,]    1    1   10
-## [3,]   -1    5   -4</code></pre>
-<pre class="r"><code>B16A16 &lt;- B16%*%A16
-B16A16</code></pre>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]   -5    0    7
-## [2,]   -4    5    3
-## [3,]    5    4    1</code></pre>
-<pre class="r"><code>A16B16 == B16A16</code></pre>
+B16 &lt;- matrix(c(1,0,1,0,1,2,2,2,0), ncol= 3)
+
+A16B16 &lt;- A16%*%B16
+B16A16 &lt;- B16%*%A16
+
+A16B16 == B16A16</code></pre>
 <pre><code>##       [,1]  [,2]  [,3]
 ## [1,] FALSE FALSE FALSE
 ## [2,] FALSE FALSE FALSE
 ## [3,] FALSE FALSE FALSE</code></pre>
 <pre class="r"><code># RESPUESTA: efectivamente los resultados cambian, la multiplicación de matrices no es conmutativa</code></pre>
-<p>#Punto 17</p>
-Demuestre que la matriz <span class="math inline">\(A17\)</span>:
-<span class="math display">\[\begin{bmatrix}
+</div>
+<div id="punto-17" class="section level1">
+<h1>Punto 17</h1>
+<p>Demuestre que la matriz <span class="math display">\[A17=\begin{bmatrix}
 2 &amp; -2 &amp; -4\\
 -1 &amp; 3 &amp; 4\\
 1 &amp; -2 &amp; -3
-\end{bmatrix}\]</span>
+\end{bmatrix}\]</span></p>
 <p>es idempotente.</p>
 <pre class="r"><code># Una matriz es idempotente cuando es igual a su cuadrado, es decir A*A = A
 A17 &lt;- matrix(c(2,-1,1,-2,3,-2,-4,4,-3), ncol= 3)
-A17</code></pre>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    2   -2   -4
-## [2,]   -1    3    4
-## [3,]    1   -2   -3</code></pre>
-<pre class="r"><code>A17A17 &lt;- A17%*%A17
-A17A17</code></pre>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    2   -2   -4
-## [2,]   -1    3    4
-## [3,]    1   -2   -3</code></pre>
-<pre class="r"><code>A17 == A17A17</code></pre>
+A17A17 &lt;- A17%*%A17
+
+A17 == A17A17</code></pre>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,] TRUE TRUE TRUE
 ## [2,] TRUE TRUE TRUE
 ## [3,] TRUE TRUE TRUE</code></pre>
 <pre class="r"><code>#RESPUESTA: Efectivamente la matriz A17 es idempotente</code></pre>
-<p>#Punto 18</p>
-Demuestre que |
-<span class="math display">\[\begin{array}{cc}
+</div>
+<div id="punto-18" class="section level1">
+<h1>Punto 18</h1>
+<p>Demuestre que <span class="math display">\[det\begin{bmatrix}
 12 &amp; 5 &amp; -3 &amp; 2\\
 8 &amp; 6 &amp; 4 &amp; 6\\
 8 &amp; 3 &amp; -1 &amp; -1\\
 12 &amp; 4 &amp; 2 &amp; 4
-\end{array}\]</span>
-<p>|=616</p>
+\end{bmatrix}=616\]</span></p>
 <pre class="r"><code>A18 &lt;- matrix(c(12,8,8,12,5,6,3,4,-3,4,-1,2,2,6,-1,4), ncol= 4)
-A18</code></pre>
-<pre><code>##      [,1] [,2] [,3] [,4]
-## [1,]   12    5   -3    2
-## [2,]    8    6    4    6
-## [3,]    8    3   -1   -1
-## [4,]   12    4    2    4</code></pre>
-<pre class="r"><code>A18det &lt;- det(A18)
+
+A18det &lt;- det(A18)
 A18det # 616</code></pre>
 <pre><code>## [1] 616</code></pre>
 <pre class="r"><code># Efectivamente la respuesta es 616</code></pre>
-<p>#Punto 19</p>
+</div>
+<div id="punto-19" class="section level1">
+<h1>Punto 19</h1>
+<p>Teniendo las matrices</p>
+<p><span class="math display">\[A19=\begin{bmatrix}1 &amp; 2 &amp; 1\\2 &amp; 4 &amp; 6\\3 &amp; 1 &amp; 2\end{bmatrix},B19=\begin{bmatrix}-1 &amp; 2 &amp; -3\\
+2 &amp; -1 &amp; 4\\3 &amp; 4 &amp; 1\end{bmatrix}\]</span></p>
+<p>Pruebe que: * <span class="math inline">\(|A19B19|= |A19|*|B19|\)</span></p>
 <pre class="r"><code>A19 &lt;- matrix(c(1,2,3,2,4,1,1,6,2), ncol= 3)
-A19</code></pre>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    1    2    1
-## [2,]    2    4    6
-## [3,]    3    1    2</code></pre>
-<pre class="r"><code>B19 &lt;- matrix(c(-1,2,3,2,-1,4,-3,4,1), ncol= 3)
-B19</code></pre>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]   -1    2   -3
-## [2,]    2   -1    4
-## [3,]    3    4    1</code></pre>
-<pre class="r"><code>A19B19 &lt;- A19%*%B19
-A19B19</code></pre>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    6    4    6
-## [2,]   24   24   16
-## [3,]    5   13   -3</code></pre>
-<pre class="r"><code>A19B19det &lt;- det(A19B19)
+B19 &lt;- matrix(c(-1,2,3,2,-1,4,-3,4,1), ncol= 3)
+
+A19B19 &lt;- A19%*%B19
+
+A19B19det &lt;- det(A19B19)
 A19B19det #80</code></pre>
 <pre><code>## [1] 80</code></pre>
 <pre class="r"><code>A19det &lt;- det(A19)
@@ -3344,7 +3295,16 @@ B19det</code></pre>
 <pre class="r"><code>A19det*B19det#80</code></pre>
 <pre><code>## [1] 80</code></pre>
 <pre class="r"><code>#RESPUESTA: se cumple la relación y en ambos casos el resultado es 80</code></pre>
-<p>#Punto 20</p>
+</div>
+<div id="punto-20" class="section level1">
+<h1>Punto 20</h1>
+<p>Teniendo la Matriz</p>
+<p><span class="math display">\[A20=\begin{bmatrix}
+-1 &amp; 2 &amp; -2\\
+4 &amp; -3 &amp; 4\\
+4 &amp; -4 &amp; 5
+\end{bmatrix}\]</span></p>
+<p>Demuestre que <span class="math inline">\(A=A^{-1}\)</span></p>
 <pre class="r"><code>A20 &lt;- matrix(c(-1,4,4,2,-3,-4,-2,4,5), ncol= 3)
 A20</code></pre>
 <pre><code>##      [,1] [,2] [,3]
@@ -3358,7 +3318,16 @@ A20inv</code></pre>
 ## [2,]    4   -3    4
 ## [3,]    4   -4    5</code></pre>
 <pre class="r"><code># En este caso se cumple con la igualdad</code></pre>
-<p>#Punto 21</p>
+</div>
+<div id="punto-21" class="section level1">
+<h1>Punto 21</h1>
+<p>Teniendo la Matriz</p>
+<p><span class="math display">\[A21=\begin{bmatrix}
+1 &amp; -1 &amp; 1\\
+2 &amp; -1 &amp; 0\\
+1 &amp; 0 &amp; 1
+\end{bmatrix}\]</span></p>
+<p>Demuestre que <span class="math inline">\(A^{2}=A^{-1}\)</span></p>
 <pre class="r"><code>A21 &lt;- matrix(c(1,2,1,-1,-1,0,1,0,1), ncol= 3)
 A21</code></pre>
 <pre><code>##      [,1] [,2] [,3]
@@ -3385,7 +3354,16 @@ A21inv</code></pre>
 ## [2,] FALSE FALSE FALSE
 ## [3,] FALSE FALSE FALSE</code></pre>
 <pre class="r"><code># El cuadrado de una matriz no es equivalente a su inversa</code></pre>
-<p>#Punto 22</p>
+</div>
+<div id="punto-22" class="section level1">
+<h1>Punto 22</h1>
+<p>¿La siguiente matriz tiene inversa?</p>
+<p><span class="math display">\[A22=\begin{bmatrix}
+2 &amp; 1 &amp; 3 &amp; 1\\
+1 &amp; 2 &amp; -1 &amp; 4\\
+3 &amp; 3 &amp; 2 &amp; 5\\
+1 &amp; -1 &amp; 4 &amp; -3\\
+\end{bmatrix}\]</span></p>
 <pre class="r"><code>A22 &lt;- matrix(c(2,1,3,1,1,2,3,-1,3,-1,2,4,1,4,5,-3), ncol= 4)
 A22</code></pre>
 <pre><code>##      [,1] [,2] [,3] [,4]
@@ -3414,7 +3392,11 @@ rA22$rank</code></pre>
 <pre><code>## [1] 2</code></pre>
 <pre class="r"><code># RESPUESTA, dado que la matriz cuadrada tiene dos valores propios diferentes a 0, entonces el rango
 # de la matriz es de 2. Esto se comprueba con el comando qr() y el paquete matlib</code></pre>
-<p>#Punto 23</p>
+</div>
+<div id="punto-23" class="section level1">
+<h1>Punto 23</h1>
+<p>Teniendo las matrices <span class="math display">\[A23=\begin{bmatrix}1 &amp; 1 &amp; -1\\2 &amp; -3 &amp; 4\\3 &amp; -2 &amp; 3\end{bmatrix},B23=\begin{bmatrix}-1 &amp; -1 &amp; -1\\6 &amp;12 &amp; 6\\5 &amp; 10 &amp; 5\end{bmatrix}\]</span></p>
+<p>Demuestre que <span class="math inline">\(r(A23B23)\neq r(B23A23)\)</span> siendo r el Rango de la Matriz</p>
 <pre class="r"><code>A23 &lt;- matrix(c(1,2,3,1,-3,-2,-1,4,3), ncol= 3)
 A23</code></pre>
 <pre><code>##      [,1] [,2] [,3]
@@ -3447,7 +3429,11 @@ rB23A23$rank # Rango 2</code></pre>
 <pre><code>## [1] 2</code></pre>
 <pre class="r"><code># RESPUESTA: efectivamente, los rangos son diferentes, demostrando nuevamente que la multiplicación
 # de matrices no es conmutativa.</code></pre>
-<p>#Punto 24</p>
+</div>
+<div id="punto-24" class="section level1">
+<h1>Punto 24</h1>
+<p>Encuentre el rango de las siguientes matrices:</p>
+<p><span class="math display">\[A24=\begin{bmatrix}6 &amp; 1 &amp; 3 &amp; 8\\4 &amp; 2 &amp; 6 &amp; -1\\10 &amp; 3 &amp; 9 &amp; 7\\16 &amp; 4 &amp; 12 &amp; 15\end{bmatrix},B24=\begin{bmatrix}1 &amp; 2 &amp; 3 &amp; 4 &amp; 5\\2 &amp; 3 &amp; 4 &amp; 5 &amp; 1\\5 &amp; 8 &amp; 11 &amp; 14 &amp; 7\end{bmatrix}\]</span></p>
 <pre class="r"><code># Recuerda: EL rango de una matriz corresponde al número de filas o columnas linealmente independientes
 A24 &lt;- matrix(c(6,4,10,16,1,2,3,4,3,6,9,12,8,-1,7,15), ncol= 4)
 A24</code></pre>
@@ -3469,9 +3455,15 @@ B24</code></pre>
 rB24$rank # Rango 2</code></pre>
 <pre><code>## [1] 2</code></pre>
 </div>
-</div>
-<div id="punto-25." class="section level1">
-<h1>Punto 25.</h1>
+<div id="punto-25" class="section level1">
+<h1>Punto 25</h1>
+<p>Pruebe que para la Matriz</p>
+<p><span class="math display">\[A25=\begin{bmatrix}
+1 &amp; 3 &amp; 2\\
+2 &amp; 6 &amp; 4
+\end{bmatrix}\]</span></p>
+<p>dos inversas generalizadas son</p>
+<p><span class="math display">\[G251=\begin{bmatrix}1 &amp; 0\\0 &amp; 0\\0 &amp; 0\end{bmatrix},G252=\begin{bmatrix}-42 &amp; -1\\5 &amp; 3\\2 &amp; 2\end{bmatrix}\]</span></p>
 <pre class="r"><code>A25 &lt;- matrix(c(1,3,2,2,6,4), ncol=3, byrow=TRUE)
 A25</code></pre>
 <pre><code>##      [,1] [,2] [,3]
