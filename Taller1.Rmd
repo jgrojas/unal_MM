@@ -446,24 +446,26 @@ desv%*%cor%*%desv
 
 ######################### LUCHO
 
-#Punto 17
-
-```{r}
-
-# Una matriz es idempotente cuando es igual a su cuadrado, es decir A*A = A
-A17 <- matrix(c(2,-1,1,-2,3,-2,-4,4,-3), ncol= 3)
-A17
-
-A17A17 <- A17%*%A17
-A17A17
-
-A17 == A17A17
-
-#RESPUESTA: Efectivamente la matriz A17 es idempotente
-```
-
 #Punto 16
 
+Dadas las matrices $A16$: 
+
+\begin{bmatrix}
+1 & -2 & 3\\
+2 & 3 & -1\\
+-3 & 1 & 2
+\end{bmatrix} 
+
+y $B16$:
+
+\begin{bmatrix}
+1 & 0 & 2\\
+0 & 1 & 2\\
+1 & 2 & 0
+\end{bmatrix}
+
+Muestre que:
+ * $AB\neq BA$
 ```{r}
 A16 <- matrix(c(1,2,-3,-2,3,1,3,-1,2), ncol= 3)
 A16
@@ -482,7 +484,42 @@ A16B16 == B16A16
 ```
 
 
+#Punto 17
+
+Demuestre que la matriz $A17$:
+\begin{bmatrix}
+2 & -2 & -4\\
+-1 & 3 & 4\\
+1 & -2 & -3
+\end{bmatrix}
+
+es idempotente.
+
+```{r}
+
+# Una matriz es idempotente cuando es igual a su cuadrado, es decir A*A = A
+A17 <- matrix(c(2,-1,1,-2,3,-2,-4,4,-3), ncol= 3)
+A17
+
+A17A17 <- A17%*%A17
+A17A17
+
+A17 == A17A17
+
+#RESPUESTA: Efectivamente la matriz A17 es idempotente
+```
+
+
 #Punto 18
+
+Demuestre que \left|
+\begin{array}{cc}
+12 & 5 & -3 & 2\\
+8 & 6 & 4 & 6\\
+8 & 3 & -1 & -1\\
+12 & 4 & 2 & 4
+\end{array}
+\right|=616
 
 ```{r}
 A18 <- matrix(c(12,8,8,12,5,6,3,4,-3,4,-1,2,2,6,-1,4), ncol= 4)
