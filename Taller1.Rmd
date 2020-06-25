@@ -3,25 +3,75 @@ title: "Ejercicios para desarrollar en R"
 author: "JRojas, MRamirez, LRomero"
 date: "6/24/2020"
 output:
-  html_document: default
+  bookdown::html_document2:
+    toc: yes
+    toc_depth: 1
+    number_sections: false
+    toc_float: yes
   pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+
 ```
 
-## R Markdown
+# Intrododucción
 
 A continuación se presentan una serie de ejercicios que permitiran interiorizar el manejo de R y su aplicación en operaciones algebraicas. En documento contiene la solución de 25 ejericios que hacen enfasis en el manejo de Algebra Lineal con R.
 
-### Ejercicio 1
+Previo a la solución de los ejercicios es necesario instalar y cargar las siguientes librerías.
 
-Hola
+```{r message=FALSE, include=TRUE}
+library(scatterplot3d)
+```
 
+# Ejercicio 1 
 
+### Dada la información siguiente, resuelva:
 
+![](Taller1_img\Ejercicio1.jpg)
 
+### a) Graficar los dos vectores
+
+```{r}
+
+#Vectores de entrada
+x=c(5,1,3)
+y=c(-1,3,1)
+
+#Función para graficar los vectores
+scatterplot3d(x,y)
+
+```
+
+### b) Encontrar a partir de los vectores datos: i) largo de x; ii) ángulo (x, y)
+
+```{r}
+
+#Cálculo del largo de x: Recordar el teorema de Pitagoras
+lgx=sqrt(5^2+1^2+3^2) 
+lgy=sqrt((-1)^2+3^2+1^2)
+
+#Cálculo del ángulo entre dos vectors a partir del producto punto
+
+# 1) Cálculo de la transpuesta de los vectores  
+
+xt=t(c(5,1,3))
+yt=t(c(-1,3,1))
+
+# 2) Cálculo del producto punto
+
+pp=xt%*%y;
+
+# 3) Cálculo del ángulo 
+cosfi=pp/(lgx*lgy)
+fi=acos(cosfi);fi
+
+```
+
+### c)
 
 
 
