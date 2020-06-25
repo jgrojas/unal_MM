@@ -3,10 +3,14 @@ title: "Ejercicios para desarrollar en R"
 author: "JRojas, MRamirez, LRomero"
 date: "6/24/2020"
 output:
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: '1'
   bookdown::html_document2:
+    number_sections: no
     toc: yes
     toc_depth: 1
-    number_sections: false
     toc_float: yes
   pdf_document: default
 ---
@@ -17,7 +21,7 @@ require(MASS)
 
 ```
 
-# Intrododucción
+# Introducción
 
 A continuación se presentan una serie de ejercicios que permitiran interiorizar el manejo de R y su aplicación en operaciones algebraicas. En documento contiene la solución de 25 ejericios que hacen enfasis en el manejo de Algebra Lineal con R.
 
@@ -121,10 +125,6 @@ t(C)%*%B
 try(A%*%B)
 #No está definida por la dimensión de las matrices
 ```
-
-
-
-
 
 
 ###################### MIGUEL
