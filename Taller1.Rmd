@@ -406,6 +406,13 @@ A<-matrix(c(4,0,0,0,9,0,0,0,1), ncol=3, byrow=TRUE)
 d<-var(A) ##Matriz Varianza y Covarianza
 
 eigen(d)
+
+Z=matrix(c(4,0,0,0,9,0,0,0,1), nrow = 3, byrow = TRUE)
+
+matrix.inverse(Z)
+
+eigen(Z)
+eigen(matrix.inverse(Z))
 ```
 
 # Punto 15. 

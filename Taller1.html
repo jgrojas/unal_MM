@@ -2960,10 +2960,7 @@ Q%*%t(Q) </code></pre>
 <pre><code>##      [,1] [,2]
 ## [1,]    1    0
 ## [2,]    0    1</code></pre>
-<pre class="r"><code>#Como el resultado es la identica se define que es ortogonal</code></pre>
-<div id="miguel" class="section level22">
-<p>MIGUEL</p>
-</div>
+<pre class="r"><code>#Como el resultado es la idéntica se define que es ortogonal</code></pre>
 </div>
 </div>
 <div id="punto-6." class="section level1">
@@ -3177,6 +3174,33 @@ eigen(d)</code></pre>
 ## [1,]  0.24813857  0.9382320 0.2411387
 ## [2,] -0.96765623  0.2283756 0.1071728
 ## [3,]  0.04548271 -0.2599331 0.9645549</code></pre>
+<pre class="r"><code>Z=matrix(c(4,0,0,0,9,0,0,0,1), nrow = 3, byrow = TRUE)
+
+matrix.inverse(Z)</code></pre>
+<pre><code>##      [,1]      [,2] [,3]
+## [1,] 0.25 0.0000000    0
+## [2,] 0.00 0.1111111    0
+## [3,] 0.00 0.0000000    1</code></pre>
+<pre class="r"><code>eigen(Z)</code></pre>
+<pre><code>## eigen() decomposition
+## $values
+## [1] 9 4 1
+## 
+## $vectors
+##      [,1] [,2] [,3]
+## [1,]    0    1    0
+## [2,]    1    0    0
+## [3,]    0    0    1</code></pre>
+<pre class="r"><code>eigen(matrix.inverse(Z))</code></pre>
+<pre><code>## eigen() decomposition
+## $values
+## [1] 1.0000000 0.2500000 0.1111111
+## 
+## $vectors
+##      [,1] [,2] [,3]
+## [1,]    0    1    0
+## [2,]    0    0    1
+## [3,]    1    0    0</code></pre>
 </div>
 <div id="punto-15." class="section level1">
 <h1>Punto 15.</h1>
