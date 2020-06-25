@@ -404,18 +404,12 @@ Encontrar:
  * Los valores propios de $\sum^{-1}$
 
 ```{r}
-A<-matrix(c(4,0,0,0,9,0,0,0,1), ncol=3, byrow=TRUE)
+A=matrix(c(4,0,0,0,9,0,0,0,1), nrow = 3, byrow = TRUE)
 
-d<-var(A) ##Matriz Varianza y Covarianza
+matrix.inverse(A)
 
-eigen(d)
-
-Z=matrix(c(4,0,0,0,9,0,0,0,1), nrow = 3, byrow = TRUE)
-
-matrix.inverse(Z)
-
-eigen(Z)
-eigen(matrix.inverse(Z))
+eigen(A)
+eigen(matrix.inverse(A))
 ```
 
 # Punto 15. 
