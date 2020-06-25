@@ -3,10 +3,14 @@ title: "Ejercicios para desarrollar en R"
 author: "JRojas, MRamirez, LRomero"
 date: "6/24/2020"
 output:
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: '1'
   bookdown::html_document2:
+    number_sections: no
     toc: yes
     toc_depth: 1
-    number_sections: false
     toc_float: yes
   pdf_document: default
 ---
@@ -15,7 +19,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Intrododucción
+# Introducción
 
 A continuación se presentan una serie de ejercicios que permitiran interiorizar el manejo de R y su aplicación en operaciones algebraicas. En documento contiene la solución de 25 ejericios que hacen enfasis en el manejo de Algebra Lineal con R.
 
@@ -159,21 +163,41 @@ D==E # El restultado es que son iguales
 
 
 
-
-
-
-
-----------------------------------------------------
 ###################### MIGUEL
 
 # Punto 6. 
+
+Dada la matriz $A$: 
+
+\begin{bmatrix}
+9 & -2\\
+2 & 6
+\end{bmatrix}
+
+Indicar si:
+ * Simétrica
+ * Definida Positiva
+
 ```{r}
 A<-matrix(c(9,-2,-2,6), ncol=2, byrow=TRUE)
 
 ### SIMETRIA
 
 A == t(A)
+```
 
+Es simétrica debido a que la matriz es igual a su transpuesta.
+
+Para indicar si es positiva se definen los vectores $g$, $m$ y $n$ los cuales corresponden a tres combinaciones del vector:
+
+\begin{bmatrix}
+8\\
+5
+\end{bmatrix}
+
+Para realizar la multiplicación de su trasnpuesto con la matriz $A$ con el vector, como se observa a continuación:
+
+```{r}
 ### MATRIZ POSITIVA
 
 g<-c(-8,-5)
@@ -185,40 +209,84 @@ t(m)%*%A%*%m
 t(n)%*%A%*%n
 ```
 
+Se observa que con las tres vectores, el resultado es un valor positivo, por lo que si se puede asumir que la matriz se define positiva.
 
 # Punto 7. 
+
+Dada la matriz del punto 6 definir:
+
+* Determinar los valores y vectores propios
+* Encontrar la inversa
+* Encontrar los valores y vectores propios de la matriz inversa
+
 ```{r}
 eigen(A)
+```
+
+Con la función eigen se obtiene los valores y vectores propios de la matriz $A$
+
+```{r}
 solve(A)
+```
+
+Con la función solve se obtiene la matriz inversa de $A$
+
+```{r}
 eigen(solve(A))
 ```
 
+Con la función eigen y solve se obtiene los valores y vectores propios de la matriz inversa de $A$
+
 
 # Punto 8. 
+
+Dada la matriz $A$: 
+
+\begin{bmatrix}
+1 & 2\\
+2 & -2
+\end{bmatrix}
+
+Encontrar:
+ * Matriz Inversa
+ * Valores y vectores propios de la matriz inversa
 ```{r}
 
 A<-matrix(c(1,2,2,-2), ncol=2, byrow=TRUE)
 
 solve(A)
-eigen(A)
+eigen(solve(A))
 ```
 
 
-# Punto 9. 
-```{r}
+# Punto 10.
 
-```
+Dada la matriz $A$: 
 
+\begin{bmatrix}
+4 & 4.001\\
+4.001 & 4.002
+\end{bmatrix}
 
+Dada la matriz $B$: 
 
-# Punto 10. 
+\begin{bmatrix}
+4 & 4.001\\
+4.001 & 4.002001
+\end{bmatrix}
+
+Se observa que en la posición $(2,2)$ poseen una diferencia significativamente pequeña, sin embargo las columnas de las dos columnas son muy cercanas a ser dependientes. Demuestre que $A^{-1} = -3B^{-1}$ con el propósito de tener en cuenta que los resultados cambian en estas situaciones.
+
 ```{r}
 A<-matrix(c(4,4.001,4.001,4.002), ncol=2, byrow=TRUE)
 B<-matrix(c(4,4.001,4.001,4.002001), ncol=2, byrow=TRUE)
 
 solve(A) == -3*solve(B)
+solve(A)
+-3*solve(B)
 ```
 
+Apesar de que el operador lógico indica que los valores no son iguales, al observar las dos matrices por separado, se ve que se puede considerar que son identicas.
 
 # Punto 11. 
 ```{r}
@@ -251,13 +319,28 @@ d<-eigen(A)
 det(A) == product(d$values)
 ```
 
-# Punto 13. 
+# Punto 13.
+
+Indicar si $3x_1^{2} + 3x_2^{2} - 2x_1x_2$ es una forma cuadrática.
+
+Como primera medida se construye la matriz $A$:
+
 ```{r}
 A<-matrix(c(3,-1,-1,3), ncol=2, byrow=TRUE)
+```
 
+Se valida que el determinante de la matriz $A$ sea igual a la multiplicación de sus valores propios:
+
+```{r}
 d<-eigen(A)
-
 det(A) == product(d$values)
+det(A)
+product(d$values)
+```
+
+Se toma el mismo ejemplo del punto 6 para validar si es una forma cuadrática:
+
+```{r}
 
 g<-c(-8,-5)
 m<-c(8,-5)
@@ -268,23 +351,53 @@ t(m)%*%A%*%m
 t(n)%*%A%*%n
 ```
 
+El resultado indica que si se puede considerar como una.
 
 # Punto 14. 
+
+Dada la matriz $A$: 
+
+\begin{bmatrix}
+4 & 0 & 0\\
+0 & 9 & 0\\
+0 & 0 & 1
+\end{bmatrix}
+
+Encontrar:
+ * $\sum^{-1}$
+ * Los valores propios de $\sum$
+ * Los valores propios de $\sum^{-1}$
+
 ```{r}
 A<-matrix(c(4,0,0,0,9,0,0,0,1), ncol=3, byrow=TRUE)
 
-solve(A)
-eigen(A)
-eigen(solve(A))
+d<-var(A) ##Matriz Varianza y Covarianza
+
+eigen(d)
 ```
 
 # Punto 15. 
+
+Dada la matriz $\sum$: 
+
+\begin{bmatrix}
+25 & -2 & 4\\
+-2 & 4 & 1\\
+4 & 1 & 9
+\end{bmatrix}
+
+Encontrar:
+ * Las matrices $\rho$ y $V^{1/2}$
+ * Demuestre que $V^{1/2} \rho V^{1/2} = \sum$
+
 ```{r}
 ## A
 
 A<-matrix(c(25,-2,4,-2,4,1,4,1,9), ncol=3, byrow=TRUE)
 desv<-diag(diag(A^0.5),3,3) ##Matriz Desviacion Estándar
+desv
 cor<-solve(desv)%*%A%*%solve(desv) ## Matriz de Correlacción
+cor
 
 ## B
 
