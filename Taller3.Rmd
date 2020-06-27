@@ -29,6 +29,7 @@ Previo a la solución de los ejercicios es necesario instalar y cargar las sigui
 
 ```{r message=FALSE, include=TRUE}
 library(readxl)
+library(ggplot2)
 library(mvShapiroTest)
 library(biotools)
 library(outliers)
@@ -88,24 +89,108 @@ Reflectancia <- read_excel("D:/metodos/Datos_ANOVA_MANOVA.xlsx")
 
 # Punto 1: MANOVA
 
+Para el análisis se realizan las gráficas para cada longitud de onda y un gráfico de dispersión que muestre la relación de las dos:
+
 ```{r}
-(MN=manova(cbind(Reflectancia$D_560nm,Reflectancia$D_720nm) ~ Reflectancia$Species))
+ggplot(data=Reflectancia, aes(Species,D_560nm)) + geom_point() + ggtitle("Comportamiento Firma 560 nm") + xlab("Especies") + ylab("Reflectancia")
+
+ggplot(data=Reflectancia, aes(Species,D_720nm)) + geom_point() + ggtitle("Comportamiento Firma 720 nm") + xlab("Especies") + ylab("Reflectancia")
+
+ggplot(data=Reflectancia, aes(D_560nm,D_720nm, color=Species)) + geom_point() + ggtitle("Comportamiento Firma 560 nm vs 720 nm")
 ```
 
+Se procede a realizar el análisis MANOVA y se presenta un resumen del mismo con la hipotesis con el test de *Wilks*
+
+```{r}
+MN=manova(cbind(Reflectancia$D_560nm,Reflectancia$D_720nm) ~ Reflectancia$Species)
+MN
+summary(MN,test="Wilks")
+
+```
+
+Observandose que se presentan diferencias significativas entre las dos especies
 
 # Punto 2: ANOVA
 
 
 ```{r}
-(AV1=aov(Reflectancia$D_560nm ~ Reflectancia$Species)) 
-(AV2=aov(Reflectancia$D_720nm ~ Reflectancia$Species))
+AV1=aov(Reflectancia$D_560nm ~ Reflectancia$Species)
+summary(AV1)
+AV2=aov(Reflectancia$D_720nm ~ Reflectancia$Species)
+summary(AV2)
 ```
 
+Se concluqye que Las especies no contribuyen significativamente a cada una de las bandas analizadas.
 
 # Punto 3: Test de Correlación
+
+A continuación es realizado el test de correlación de *Pearson*
 
 ```{r}
 cor.test(Reflectancia$D_560nm,Reflectancia$D_720nm)
 ```
 
+Observandose que si existe relación lineal entre las dos variables, por lo tanto no se puede asumir que sea nula la correlación.
+
+
+# Punto 4: Normalidad univariada
+
+A continuación es realizado el test de *Shapiro-Wilk* para cada una de las respuestas
+
+```{r}
+shapiro.test(Reflectancia$D_560nm)
+shapiro.test(Reflectancia$D_720nm)
+```
+
+No se puede asumir normalidad en alguna de las dos variables.
+
+# Punto 5: Normalidad multivariada
+
+A continuación es realizado el test multivariado de *Shapiro-Wilk*
+
+```{r}
+mvShapiro.Test(as.matrix(Reflectancia[,1:2]))
+```
+
+No se puede asumir normalidad multivariada.
+
+# Punto 6: Igualdad de Varianza Univariante
+
+A continuación es realizado el test multivariado de *Barlett*
+
+```{r}
+bartlett.test(Reflectancia$D_560nm ~ Reflectancia$Species)
+bartlett.test(Reflectancia$D_720nm ~ Reflectancia$Species)
+```
+
+Existe igualdad de varianza en los valores de reflectancia en los valores dados a 560 nm mientras que con 720 no se puede asumir esto.
+
+# Punto 7: Igualdad de matrices de varianza y covarianza
+
+Para evaluar la igualdad de la matriz de varianza y covarianza fue realizado el test de *Box*
+
+```{r}
+boxM(as.matrix(Reflectancia[,-3]),as.matrix(Reflectancia$Species))
+```
+
+Concluyendo que no es posible asumir que las matrices de varianza y covarianza por cada una de las especies son iguales.
+
+# Punto 8: Outliers univariados
+
+Se realizó un gráfico box-plot para cada uno de los valores de longitud de onda y también fue realizada la prueba de *Dixon* que también hace la identificación de los valores atípicos:
+
+```{r}
+#Gráficas Box-clot
+
+ggplot(data=Reflectancia, aes(Species,D_560nm)) + geom_boxplot() + ggtitle("Comportamiento Firma 560 nm") + xlab("Especies") + ylab("Reflectancia")
+
+ggplot(data=Reflectancia, aes(Species,D_720nm)) + geom_boxplot() + ggtitle("Comportamiento Firma 720 nm") + xlab("Especies") + ylab("Reflectancia")
+
+# Prueba de Dixon
+
+dixon.test(sample(Reflectancia$D_560nm, size=30))
+dixon.test(sample(Reflectancia$D_720nm, size=30))
+```
+
+Viendo que para la longitud de onda de 560 no existen valores atípicos mientrás que para el de 720 nm si para la especie SS.
 
