@@ -655,7 +655,7 @@ rA <- qr(A)
 rA$rank # Rango 2
 
 B <- matrix(c(1,2,5,2,3,8,3,4,11,4,5,14,5,1,7), ncol= 5)
-rB <- qr(B24) 
+rB <- qr(B) 
 rB$rank # Rango 2
 ```
 
