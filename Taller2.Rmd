@@ -88,7 +88,9 @@ Si los datos son mediciones, la primera prueba no tendrÃ­a sentido porque solo e
 
 
 
+# Prueba T$^2$ Una muestra. 
 
+Se están probando dos dispositivos que permiten medir el ángulo recto y la distancia a una serie de puntos en un transecto. La figura muestra la situación:
 
 
 
