@@ -206,14 +206,16 @@ segments(-qbonf, 0, -qbonf, dt(qbonf, df = 46), col = "darkblue")
 
 ```
 
+# Prueba t-Dos muestras dependientes
 
+Suponga del problema anterior que se seleccionó como mejor operario aquel que generó el menor coeficiente de variación de las mediciones angulares y se utilizó en el siguiente estudio. Ahora se generaron las mismas 6 medidas, pero una a las 10 de la mañana y otra a las 12 del mediodía, cuando la temperatura se había incrementado 5° C. Los datos se muestran a continuación:
 
 ```{r}
 
 ```
 
 
-
+ 
 
 
 
