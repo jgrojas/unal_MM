@@ -454,18 +454,18 @@ desv%*%cor%*%desv
 
 Dadas las matrices: 
 
-\[A16=\begin{bmatrix}1 & -2 & 3\\2 & 3 & -1\\-3 & 1 & 2\end{bmatrix},B16=\begin{bmatrix}1 & 0 & 2\\0 & 1 & 2\\1 & 2 & 0\end{bmatrix}\]
+\[A=\begin{bmatrix}1 & -2 & 3\\2 & 3 & -1\\-3 & 1 & 2\end{bmatrix},B=\begin{bmatrix}1 & 0 & 2\\0 & 1 & 2\\1 & 2 & 0\end{bmatrix}\]
 
 Muestre que:
- * $A16B16\neq B16A16$
+ * $AB\neq BA$
 ```{r}
-A16 <- matrix(c(1,2,-3,-2,3,1,3,-1,2), ncol= 3)
-B16 <- matrix(c(1,0,1,0,1,2,2,2,0), ncol= 3)
+A <- matrix(c(1,2,-3,-2,3,1,3,-1,2), ncol= 3)
+B <- matrix(c(1,0,1,0,1,2,2,2,0), ncol= 3)
 
-A16B16 <- A16%*%B16
-B16A16 <- B16%*%A16
+AB <- A%*%B
+BA <- B%*%A
 
-A16B16 == B16A16
+AB == BA
 # RESPUESTA: efectivamente los resultados cambian, la multiplicación de matrices no es conmutativa
 ```
 
@@ -473,7 +473,7 @@ A16B16 == B16A16
 # Punto 17
 
 Demuestre que la matriz
-\[A17=\begin{bmatrix}
+\[A=\begin{bmatrix}
 2 & -2 & -4\\
 -1 & 3 & 4\\
 1 & -2 & -3
@@ -484,10 +484,10 @@ es idempotente.
 ```{r}
 
 # Una matriz es idempotente cuando es igual a su cuadrado, es decir A*A = A
-A17 <- matrix(c(2,-1,1,-2,3,-2,-4,4,-3), ncol= 3)
-A17A17 <- A17%*%A17
+A <- matrix(c(2,-1,1,-2,3,-2,-4,4,-3), ncol= 3)
+AA <- A%*%A
 
-A17 == A17A17
+A == AA
 
 #RESPUESTA: Efectivamente la matriz A17 es idempotente
 ```
@@ -504,10 +504,10 @@ Demuestre que
 \end{bmatrix}=616\]
 
 ```{r}
-A18 <- matrix(c(12,8,8,12,5,6,3,4,-3,4,-1,2,2,6,-1,4), ncol= 4)
+A <- matrix(c(12,8,8,12,5,6,3,4,-3,4,-1,2,2,6,-1,4), ncol= 4)
 
-A18det <- det(A18)
-A18det # 616
+Adet <- det(A)
+Adet # 616
 # Efectivamente la respuesta es 616
 ```
 
@@ -516,28 +516,28 @@ A18det # 616
 
 Teniendo las matrices
 
-\[A19=\begin{bmatrix}1 & 2 & 1\\2 & 4 & 6\\3 & 1 & 2\end{bmatrix},B19=\begin{bmatrix}-1 & 2 & -3\\
+\[A=\begin{bmatrix}1 & 2 & 1\\2 & 4 & 6\\3 & 1 & 2\end{bmatrix},B=\begin{bmatrix}-1 & 2 & -3\\
 2 & -1 & 4\\3 & 4 & 1\end{bmatrix}\]
 
 Pruebe que:
- * $|A19B19|= |A19|*|B19|$
+ * $|AB|= |A|*|B|$
 
 ```{r}
-A19 <- matrix(c(1,2,3,2,4,1,1,6,2), ncol= 3)
-B19 <- matrix(c(-1,2,3,2,-1,4,-3,4,1), ncol= 3)
+A <- matrix(c(1,2,3,2,4,1,1,6,2), ncol= 3)
+B <- matrix(c(-1,2,3,2,-1,4,-3,4,1), ncol= 3)
 
-A19B19 <- A19%*%B19
+AB <- A%*%B
 
-A19B19det <- det(A19B19)
-A19B19det #80
+ABdet <- det(AB)
+ABdet #80
 
-A19det <- det(A19)
-A19det
+Adet <- det(A)
+Adet
 
-B19det <- det(B19)
-B19det
+Bdet <- det(B)
+Bdet
 
-A19det*B19det#80
+Adet*Bdet#80
 
 #RESPUESTA: se cumple la relación y en ambos casos el resultado es 80
 ```
@@ -547,7 +547,7 @@ A19det*B19det#80
 
 Teniendo la Matriz
 
-\[A20=\begin{bmatrix}
+\[A=\begin{bmatrix}
 -1 & 2 & -2\\
 4 & -3 & 4\\
 4 & -4 & 5
@@ -555,11 +555,10 @@ Teniendo la Matriz
 
 Demuestre que $A=A^{-1}$
 ```{r}
-A20 <- matrix(c(-1,4,4,2,-3,-4,-2,4,5), ncol= 3)
-A20
+A <- matrix(c(-1,4,4,2,-3,-4,-2,4,5), ncol= 3)
 
-A20inv <- solve(A20)
-A20inv
+Ainv <- solve(A)
+Ainv
 
 # En este caso se cumple con la igualdad
 ```
@@ -569,7 +568,7 @@ A20inv
 
 Teniendo la Matriz
 
-\[A21=\begin{bmatrix}
+\[A=\begin{bmatrix}
 1 & -1 & 1\\
 2 & -1 & 0\\
 1 & 0 & 1
@@ -577,18 +576,16 @@ Teniendo la Matriz
 
 Demuestre que $A^{2}=A^{-1}$
 ```{r}
-A21 <- matrix(c(1,2,1,-1,-1,0,1,0,1), ncol= 3)
-A21
+A <- matrix(c(1,2,1,-1,-1,0,1,0,1), ncol= 3)
 
 # Pruebe que A^2 = A^-1
 
-A21A21 <- A21%*%A21
-A21A21
+AA <- A%*%A
 
-A21inv <- solve(A21)
-A21inv
+Ainv <- solve(A)
+Ainv
 
-A21A21 == A21inv
+AA == Ainv
 
 # El cuadrado de una matriz no es equivalente a su inversa
 ```
@@ -598,24 +595,22 @@ A21A21 == A21inv
 
 ¿La siguiente matriz tiene inversa?
 
-\[A22=\begin{bmatrix}
+\[A=\begin{bmatrix}
 2 & 1 & 3 & 1\\
 1 & 2 & -1 & 4\\
 3 & 3 & 2 & 5\\
 1 & -1 & 4 & -3\\
 \end{bmatrix}\]
 ```{r}
-A22 <- matrix(c(2,1,3,1,1,2,3,-1,3,-1,2,4,1,4,5,-3), ncol= 4)
-A22
+A <- matrix(c(2,1,3,1,1,2,3,-1,3,-1,2,4,1,4,5,-3), ncol= 4)
 
 #A22inv <- solve(A22)
 
 # RESPUESTA, la matriz es singular, por lo que no es invertible
 
-A22vv <- eigen(A22)
-A22vv
-rA22 <- qr(A22)
-rA22$rank
+Avv <- eigen(A)
+rA <- qr(A)
+rA$rank
 
 # RESPUESTA, dado que la matriz cuadrada tiene dos valores propios diferentes a 0, entonces el rango
 # de la matriz es de 2. Esto se comprueba con el comando qr() y el paquete matlib
@@ -625,26 +620,22 @@ rA22$rank
 # Punto 23
 
 Teniendo las matrices
-\[A23=\begin{bmatrix}1 & 1 & -1\\2 & -3 & 4\\3 & -2 & 3\end{bmatrix},B23=\begin{bmatrix}-1 & -1 & -1\\6 &12 & 6\\5 & 10 & 5\end{bmatrix}\]
+\[A=\begin{bmatrix}1 & 1 & -1\\2 & -3 & 4\\3 & -2 & 3\end{bmatrix},B=\begin{bmatrix}-1 & -1 & -1\\6 &12 & 6\\5 & 10 & 5\end{bmatrix}\]
 
-Demuestre que $r(A23B23)\neq r(B23A23)$ siendo r el Rango de la Matriz
+Demuestre que $r(AB)\neq r(BA)$ siendo r el Rango de la Matriz
 
 ```{r}
-A23 <- matrix(c(1,2,3,1,-3,-2,-1,4,3), ncol= 3)
-A23
+A <- matrix(c(1,2,3,1,-3,-2,-1,4,3), ncol= 3)
 
-B23 <- matrix(c(-1,6,5,-1,12,10,-1,6,5), ncol= 3)
-B23
+B <- matrix(c(-1,6,5,-1,12,10,-1,6,5), ncol= 3)
 
-A23B23 <- A23%*%B23
-A23B23
-rA23B23 <- qr(A23B23) 
-rA23B23$rank # Rango 1
+AB <- A%*%B
+rAB <- qr(AB) 
+rAB$rank # Rango 1
 
-B23A23 <- B23%*%A23
-B23A23
-rB23A23 <- qr(B23A23)
-rB23A23$rank # Rango 2
+BA <- B%*%A
+rBA <- qr(BA)
+rBA$rank # Rango 2
 
 # RESPUESTA: efectivamente, los rangos son diferentes, demostrando nuevamente que la multiplicación
 # de matrices no es conmutativa.
@@ -655,19 +646,17 @@ rB23A23$rank # Rango 2
 
 Encuentre el rango de las siguientes matrices:
 
-\[A24=\begin{bmatrix}6 & 1 & 3 & 8\\4 & 2 & 6 & -1\\10 & 3 & 9 & 7\\16 & 4 & 12 & 15\end{bmatrix},B24=\begin{bmatrix}1 & 2 & 3 & 4 & 5\\2 & 3 & 4 & 5 & 1\\5 & 8 & 11 & 14 & 7\end{bmatrix}\]
+\[A=\begin{bmatrix}6 & 1 & 3 & 8\\4 & 2 & 6 & -1\\10 & 3 & 9 & 7\\16 & 4 & 12 & 15\end{bmatrix},B=\begin{bmatrix}1 & 2 & 3 & 4 & 5\\2 & 3 & 4 & 5 & 1\\5 & 8 & 11 & 14 & 7\end{bmatrix}\]
 
 ```{r}
 # Recuerda: EL rango de una matriz corresponde al número de filas o columnas linealmente independientes
-A24 <- matrix(c(6,4,10,16,1,2,3,4,3,6,9,12,8,-1,7,15), ncol= 4)
-A24
-rA24 <- qr(A24) 
-rA24$rank # Rango 2
+A <- matrix(c(6,4,10,16,1,2,3,4,3,6,9,12,8,-1,7,15), ncol= 4)
+rA <- qr(A) 
+rA$rank # Rango 2
 
-B24 <- matrix(c(1,2,5,2,3,8,3,4,11,4,5,14,5,1,7), ncol= 5)
-B24
-rB24 <- qr(B24) 
-rB24$rank # Rango 2
+B <- matrix(c(1,2,5,2,3,8,3,4,11,4,5,14,5,1,7), ncol= 5)
+rB <- qr(B24) 
+rB$rank # Rango 2
 ```
 
 
@@ -675,30 +664,27 @@ rB24$rank # Rango 2
 
 Pruebe que para la Matriz 
 
-\[A25=\begin{bmatrix}
+\[A=\begin{bmatrix}
 1 & 3 & 2\\
 2 & 6 & 4
 \end{bmatrix}\]
 
 dos inversas generalizadas son
 
-\[G251=\begin{bmatrix}1 & 0\\0 & 0\\0 & 0\end{bmatrix},G252=\begin{bmatrix}-42 & -1\\5 & 3\\2 & 2\end{bmatrix}\]
+\[G1=\begin{bmatrix}1 & 0\\0 & 0\\0 & 0\end{bmatrix},G2=\begin{bmatrix}-42 & -1\\5 & 3\\2 & 2\end{bmatrix}\]
 
 ```{r}
 
-A25 <- matrix(c(1,3,2,2,6,4), ncol=3, byrow=TRUE)
-A25
+A <- matrix(c(1,3,2,2,6,4), ncol=3, byrow=TRUE)
 
-G251 <- matrix(c(1,0,0,0,0,0), ncol=2, byrow=TRUE)
-G251
+G1 <- matrix(c(1,0,0,0,0,0), ncol=2, byrow=TRUE)
 
-G252 <-matrix(c(-42,-1,5,3,2,2), ncol=2, byrow=TRUE)
-G252
+G2 <- matrix(c(-42,-1,5,3,2,2), ncol=2, byrow=TRUE)
 
 #Para saber si corresponden a inversas generalizadas, debe cumplirse la propiedad AA-A= A, siendo A- cualquiera de las matrices inversas propuestas.
 
-A25%*%G251%*%A25 == A25
-A25%*%G252%*%A25 == A25
+A%*%G1%*%A == A
+A%*%G2%*%A == A
 
 #Dado que se cumple la propiedad, podemos afirmar que las matrices G251 y G252 son inversas generalizadas de A25 
 ```
