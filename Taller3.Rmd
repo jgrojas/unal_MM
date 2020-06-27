@@ -1,0 +1,111 @@
+---
+title: "Taller 2: Análisis ANOVA-MANOVA"
+author: "JRojas, MRamirez, LRomero"
+date: "6/24/2020"
+output:
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: '1'
+    toc_float: yes
+  bookdown::html_document2:
+    number_sections: no
+    toc: yes
+    toc_depth: 1
+    toc_float: yes
+  pdf_document: default
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introducción
+
+A continuación se presentan una serie de ejercicios propuesto que permitiran interiorizar el análisis de datos multivariados utilizandos las técnicas ANOVA y MANOVA. Estos ejercicios hacen parte del contenido académico desarrollado por el profesor Aquiles Enrique Darghan Contreras referente a la asignatura de Métodos Multivariados.
+
+Previo a la solución de los ejercicios es necesario instalar y cargar las siguientes librerías.
+
+```{r message=FALSE, include=TRUE}
+library(readxl)
+library(mvShapiroTest)
+library(biotools)
+library(outliers)
+```
+
+## Datos
+
+Los ejercicios mostrados son desarrollados a partir de los siguientes datos correspondientes a una toma realizada con un espectroradiometro en los anchos de bandas correspondientes a 560 *nm* y 720 *nm* de las especies *SS*, *JL* y *LP*
+
+D_560nm | D_720nm | Species
+--------| ------- | -------
+9.33 | 19.14 | SS
+8.74 | 19.55 | SS
+9.31 | 19.24 | SS
+8.27 | 16.37 | SS
+10.22 | 25 | SS
+10.13 | 25.32 | SS
+10.42 | 27.12 | SS
+10.62 | 26.28 | SS
+15.25 | 38.89 | SS
+16.22 | 36.67 | SS
+17.24 | 40.74 | SS
+12.77 | 67.5 | SS
+12.07 | 33.03 | JL
+11.03 | 32.37 | JL
+12.48 | 31.31 | JL
+12.12 | 33.33 | JL
+15.38 | 40 | JL
+14.21 | 40.48 | JL
+9.69 | 33.9 | JL
+14.35 | 40.15 | JL
+38.71 | 77.14 | JL
+44.74 | 78.57 | JL
+36.67 | 71.43 | JL
+37.21 | 45 | JL
+8.73 | 23.27 | LP
+7.94 | 20.87 | LP
+8.37 | 22.16 | LP
+7.86 | 21.78 | LP
+8.45 | 26.32 | LP
+6.79 | 22.73 | LP
+8.34 | 26.67 | LP
+7.54 | 24.87 | LP
+14.04 | 44.44 | LP
+13.51 | 37.93 | LP
+13.33 | 37.93 | LP
+12.77 | 60.87 | LP
+
+Los datos se encuentran disponibles en un archivo de [google sheets](https://docs.google.com/spreadsheets/d/1KeSKTZRl8or_yGPC7_876nhyAQlxqjK3EC9UVl8n4yc/edit?usp=sharing) para quien desee realizar los mismos ejercicios presentados.
+
+Como primer paso los datos son cargados a la variable denominada *Reflectancia*
+
+```{r}
+Reflectancia <- read_excel("D:/metodos/Datos_ANOVA_MANOVA.xlsx")
+```
+
+
+# Punto 1: MANOVA
+
+```{r}
+(MN=manova(cbind(Reflectancia$D_560nm,Reflectancia$D_720nm) ~ Reflectancia$Species))
+```
+
+
+# Punto 2: ANOVA
+
+
+```{r}
+(AV1=aov(Reflectancia$D_560nm ~ Reflectancia$Species)) 
+(AV2=aov(Reflectancia$D_720nm ~ Reflectancia$Species))
+```
+
+
+# Punto 3: Test de Correlación
+
+```{r}
+cor.test(Reflectancia$D_560nm,Reflectancia$D_720nm)
+```
+
+
