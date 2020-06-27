@@ -1,0 +1,48 @@
+---
+title: "Taller 2: Análisis ANOVA-MANOVA"
+author: "JRojas, MRamirez, LRomero"
+date: "6/24/2020"
+output:
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: '1'
+    toc_float: yes
+  bookdown::html_document2:
+    number_sections: no
+    toc: yes
+    toc_depth: 1
+    toc_float: yes
+  pdf_document: default
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introducción
+
+A continuación se presentan una serie de ejercicios propuesto que permitiran interiorizar el análisis de datos multivariados utilizandos las técnicas ANOVA y MANOVA. Estos ejercicios hacen parte del contenido académico desarrollado por el profesor Aquiles Enrique Darghan Contreras referente a la asignatura de Métodos Multivariados.
+
+Previo a la solución de los ejercicios es necesario instalar y cargar las siguientes librerías.
+
+```{r message=FALSE, include=TRUE}
+library(mvShapiroTest)
+library(biotools)
+library(outliers)
+```
+
+## Datos
+
+Los ejercicios mostrados son desarrollados a partir de los siguientes datos correspondientes a una firma espectral de las especies *SS*, *JL* y *LP*
+
+Primer encabezado     | Segundo encabezado
+--------------------- | ---------------------
+Contenido de la celda | Contenido de la celda
+Contenido de la celda | Contenido de la celda
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
