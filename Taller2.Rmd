@@ -39,7 +39,7 @@ Previo a la solución de los ejercicios es necesario instalar y cargar las sigui
 library("kableExtra")
 ```
 
-# Punto 1. Prueba t-Una muestra.  
+# Prueba t-Una muestra.  
 
 Una línea base de longitud calibrada en 955m se midió 10 veces. Cada medida es independiente y se hizo con la misma precisión.
 
@@ -54,7 +54,7 @@ table$M1[0]=med[1];table$M2=med[2];table$M3=med[3];table$M4=med[4];table$M5=med[
 kable(table) %>% kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
-Pruebe utilizando un nivel de confianza del 10% si la distancia medida es estadísticamente diferente de la calibrada.
+a) Pruebe utilizando un nivel de confianza del 10% si la distancia medida es estadísticamente diferente de la calibrada.
 
 ```{r}
 med=c(965.1,955.1,954.8,956.2,956.4,957.2,958.1,960.4,953.2,954.8)
@@ -62,6 +62,25 @@ pruebat <- t.test(med,alternative = "t",mu = 0,var.equal = F, conf.level = 0.90)
 pruebat #La media  está en la cola inferior
 ```
 
+b) Remuestree el vector de mediciones y obtenga el error estándar Bootstrap y utilícelo en la prueba t-Student y compare con el resultado anterior( Explique). (Realice 100 simulaciones)
+
+```{r}
+set.seed(2020)
+B = 100 #repeticiones Bootstrap 
+df=data.frame(med)
+remuestreo <- with(df,matrix(sample(med,size = 10,replace = TRUE), B, 10))
+dim(remuestreo)
+####### las medias de las submuestras
+medias <- apply(remuestreo, 1, mean)
+pruebat <- t.test(medias,alternative = "t",mu = 955,var.equal = F, conf.level = 0.90);
+pruebat 
+```
+
+Conclusión: Los resultados consideran que la media no es 955 sino que está dentro en el rango 959.3-960.5
+
+c) ¿Cuánto debería ser n en la expresión de la prueba t para que el error estándar Bootstrap sea el mismo que el asumido en la prueba?
+
+Si los datos son mediciones, la primera prueba no tendría sentido porque solo es una media. En este caso la primera prueba estaría asumiendo que cada medición es una valor promedio diferente y no una medición. Para que el error estándar Bootstrap tenga sentido deberíamos tener más repeticiones y valores promedios de diferentes conjuntos de datos.
 
 
 

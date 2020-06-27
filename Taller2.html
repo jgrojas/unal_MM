@@ -2885,7 +2885,9 @@ M10
 </tr>
 </tbody>
 </table>
-<p>Pruebe utilizando un nivel de confianza del 10% si la distancia medida es estadísticamente diferente de la calibrada.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Pruebe utilizando un nivel de confianza del 10% si la distancia medida es estadísticamente diferente de la calibrada.</li>
+</ol>
 <pre class="r"><code>med=c(965.1,955.1,954.8,956.2,956.4,957.2,958.1,960.4,953.2,954.8)
 pruebat &lt;- t.test(med,alternative = &quot;t&quot;,mu = 0,var.equal = F, conf.level = 0.90);
 pruebat #La media  está en la cola inferior</code></pre>
@@ -2900,6 +2902,35 @@ pruebat #La media  está en la cola inferior</code></pre>
 ## sample estimates:
 ## mean of x 
 ##    957.13</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Remuestree el vector de mediciones y obtenga el error estándar Bootstrap y utilícelo en la prueba t-Student y compare con el resultado anterior( Explique). (Realice 100 simulaciones)</li>
+</ol>
+<pre class="r"><code>set.seed(2020)
+B = 100 #repeticiones Bootstrap 
+df=data.frame(med)
+remuestreo &lt;- with(df,matrix(sample(med,size = 10,replace = TRUE), B, 10))
+dim(remuestreo)</code></pre>
+<pre><code>## [1] 100  10</code></pre>
+<pre class="r"><code>####### las medias de las submuestras
+medias &lt;- apply(remuestreo, 1, mean)
+pruebat &lt;- t.test(medias,alternative = &quot;t&quot;,mu = 955,var.equal = F, conf.level = 0.90);
+pruebat </code></pre>
+<pre><code>## 
+##  One Sample t-test
+## 
+## data:  medias
+## t = 13.232, df = 99, p-value &lt; 2.2e-16
+## alternative hypothesis: true mean is not equal to 955
+## 90 percent confidence interval:
+##  959.3376 960.5824
+## sample estimates:
+## mean of x 
+##    959.96</code></pre>
+<p>Conclusión: Los resultados consideran que la media no es 955 sino que está dentro en el rango 959.3-960.5</p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>¿Cuánto debería ser n en la expresión de la prueba t para que el error estándar Bootstrap sea el mismo que el asumido en la prueba?</li>
+</ol>
+<p>Si los datos son mediciones, la primera prueba no tendría sentido porque solo es una media. En este caso la primera prueba estaría asumiendo que cada medición es una valor promedio diferente y no una medición. Para que el error estándar Bootstrap tenga sentido deberíamos tener más repeticiones y valores promedios de diferentes conjuntos de datos.</p>
 </div>
 
 
