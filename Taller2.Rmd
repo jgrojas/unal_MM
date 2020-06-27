@@ -39,11 +39,6 @@ Previo a la solución de los ejercicios es necesario instalar y cargar las sigui
 library(dplyr)
 library(kableExtra)
 library(ggplot2)
-library(biotools)
-library(ergm)
-library(ICSNP)
-library(rrcov)
-
 ```
 
 ```{r message=FALSE}
@@ -106,7 +101,7 @@ table=data.frame(M1=character(),M2=character(),M3=character(),M4=character(),M5=
 table[1,]=0;table[2,]=0;
 table$M1[1]="Operario X";table$M2[1]="112°47’34’’";table$M3[1]="112°44’39’’";table$M4[1]="113°01’34’’";table$M5[1]="112°57’30’’";table$M6[1]="113°00’14’’";table$M7[1]="111°59’58’’";table$M8[1]="112°09’58’’"
 
-table$M1[2]="Operario Y";table$M2[2]="113°47’24’’";table$M3[2]="112°14’39’’";table$M4[2]="112°01’34’’";table$M5[2]="112°17’32’’";table$M6[2]="113°10’04’’";table$M7[2]="112°19’18’’";table$M8[2]="112°59’48’’";
+table$M1[2]="Operario Y";table$M2[2]="113°47’24’’";table$M3[2]="112°14’39’’";table$M4[2]="112°01’34’’";table$M5[2]="112°17’32’’";table$M6[2]="113°10’04’’";table$M7[2]="112°19’18’’";table$M8[2]="112°59’48’";
 
 kable(table, col.names = NULL) %>% kable_styling(bootstrap_options = c("striped", "hover"))
 ```
@@ -259,7 +254,10 @@ pda2=t.test(datos5a$angulo,datos5b$angulo, alternative = "two.sided", var.equal 
 b. Compare los resultados anteriores con el resultado actualizado si utilizara la correcci?n de Bonferroni.
 
 ```{r}
-
+pajust <- function(hipotesis,alfa){
+  pvalor = 1-((1-alfa)^(1/hipotesis))
+  return(pvalor)
+}
 crrb=pajust(2, 0.05) ## Calculo del nuevo nivel de significancia por Bonferroni
 crrb=1-crrb ## Nivel de Confianza con Bonferroni
 
@@ -346,6 +344,7 @@ g. Utilice la prueba M de Box de Biotools y verifique si ambas matrices de varia
 ```{r}
 ## g
 
+library(biotools)
 ## Matriz de varianzas y covarianzas metodo A
 data.a <- as.matrix((filter(datos5[, 1:2], disp == "A")), ncol = 2)
 sa <- var(data.a)
@@ -355,8 +354,11 @@ sb <- var(data.b)
 ## Prueba M de Box
 boxM(dft2i[,-3],dft2i[,3])
 
+require(ergm)
+
 approx.hotelling.diff.test(datos5a[,-3], datos5b[,-3], mu0 = 0, assume.indep = T, var.equal = T)
 
+require(rrcov)
 
 T2.test(datos5a[,-3],
         datos5b[,-3], method = "c")
