@@ -39,6 +39,7 @@ Previo a la solución de los ejercicios es necesario instalar y cargar las sigui
 library(dplyr)
 library(kableExtra)
 library(ggplot2)
+library(ICSNP)
 ```
 
 ```{r message=FALSE}
