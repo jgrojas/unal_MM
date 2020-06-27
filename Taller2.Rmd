@@ -41,6 +41,9 @@ library(kableExtra)
 library(ggplot2)
 library(ICSNP)
 library(biotools)
+library(rrcov)
+library(ergm)
+
 ```
 
 ```{r message=FALSE}
@@ -373,7 +376,6 @@ PruebaH2 <- HotellingsT2(Z~g, mu = c(0,0)) ##
 g. Utilice la prueba M de Box de Biotools y verifique si ambas matrices de varianzas y covarianzas son estad?sticamente iguales al 95%. (cuide el cálculo de las varianzas en datos angulares). De ser diferentes las varianzas consulte el texto de Wichern para que utilice la prueba de Hotelling para varianzas y covarianzas desiguales y con la ayuda de alguna función en R/Python contraste las hip?tesis bivariadas de longitud y ?ngulo nuevamente.
 
 ```{r}
-library(biotools)
 ## Matriz de varianzas y covarianzas metodo A
 data.a <- as.matrix((filter(datos5[, 1:2], disp == "A")), ncol = 2)
 sa <- var(data.a)
@@ -383,11 +385,7 @@ sb <- var(data.b)
 ## Prueba M de Box
 boxM(dft2i[,-3],dft2i[,3])
 
-require(ergm)
-
 approx.hotelling.diff.test(datos5a[,-3], datos5b[,-3], mu0 = 0, assume.indep = T, var.equal = T)
-
-require(rrcov)
 
 T2.test(datos5a[,-3],
         datos5b[,-3], method = "c")
