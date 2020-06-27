@@ -108,7 +108,6 @@ kable(table, col.names = NULL) %>% kable_styling(bootstrap_options = c("striped"
 
 a) Determinar al 95% de nivel de confianza si las dos medias obtenidas por los operarios son estadísticamente iguales. Utilice la información del artículo mostrado en clase para decidir si las varianzas pueden considerarse iguales o no.
 
-
 ```{r}
 #Crear el dataframe con la información de operarios
 set.seed(2020);options(digits = 9)
@@ -211,3 +210,18 @@ segments(-qbonf, 0, -qbonf, dt(qbonf, df = 46), col = "darkblue")
 ```{r}
 
 ```
+
+
+
+
+
+
+
+
+
+
+# Prueba T$^2$ Una muestra. 
+
+Se est?n probando dos dispositivos que permiten medir el ?ngulo recto y la distancia a una serie de puntos en un transecto. La figura muestra la situaci?n:
+
+
