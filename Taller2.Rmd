@@ -221,6 +221,26 @@ kable(table, col.names = NULL) %>% kable_styling(bootstrap_options = c("striped"
 ```
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
 
 
