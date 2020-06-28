@@ -340,7 +340,7 @@ datos5b=datos5[9:16,]
 
 A partir de los datos presentados, se proponen la realización de los siguientes ejercicios:
 
-a. Realice la prueba t-Student de forma convencional para dos muestras independientes y saque las conclusiones por separado de la comparación de las medias de longitud y ángulos para ambos dispositivos (sea cuidadoso al momento de obtener varianzas en ángulos). Utilice un nivel de confianza del 95% en cada caso.
+a) Realice la prueba t-Student de forma convencional para dos muestras independientes y saque las conclusiones por separado de la comparación de las medias de longitud y ángulos para ambos dispositivos (sea cuidadoso al momento de obtener varianzas en ángulos). Utilice un nivel de confianza del 95% en cada caso.
 
 ```{r}
 pda1=t.test(datos5a$distancia,datos5b$distancia, alternative = "two.sided", var.equal = T, mu=0, conf.level = 0.95)
@@ -352,7 +352,7 @@ pda2
 
 Para los dos casos no se puede rechazar la hipotesis nula de igualdad de medias, es decir que las medias de los dos grupos pueden asumirse como iguales.
 
-b. Compare los resultados anteriores con el resultado actualizado si utilizara la corrección de Bonferroni.
+b) Compare los resultados anteriores con el resultado actualizado si utilizara la corrección de Bonferroni.
 
 ```{r}
 pajust <- function(hipotesis,alfa){
@@ -367,7 +367,7 @@ crrb
 
 A pesar de que es más exigente por corrección de Bonferroni (nivel de confianza de 97.5%), aún no se puede rechazar las hípotesis nulas debido a que los p-valor de las pruebas son mayores a 0.10, es decir mucho más que el nivel de significancia.
 
-c. Obtenga el coeficiente de correlación para este tipo de datos (Pearson) sin discriminar por dispositivo.
+c) Obtenga el coeficiente de correlación para este tipo de datos (Pearson) sin discriminar por dispositivo.
 
 ```{r}
 cor(datos5$distancia,datos5$angulo)
@@ -375,7 +375,7 @@ cor(datos5$distancia,datos5$angulo)
 
 Según el índice de correlación existe una leve relación lineal negativa entre las dos variables.
 
-d. Estime el error estándar para la diferencia de media por método Bootstrap para ajustar la prueba t con este error y compare con el resultado sin el método Bootstrap.
+d) Estime el error estándar para la diferencia de media por método Bootstrap para ajustar la prueba t con este error y compare con el resultado sin el método Bootstrap.
 
 ```{r}
 n.datos <- with(datos5, summary(disp)) #cada tamano de muestra
@@ -412,11 +412,11 @@ pdang
 
 Con Bootstrap se observa que se rechaza la hipotesis de igualdad de medias para la variable de ángulos, mientras que en distancia persiste la misma conclusión.
 
-e. Use el resultado anterior y ajuste además con la corrección de Bonferroni.
+e) Use el resultado anterior y ajuste además con la corrección de Bonferroni.
 
 Por corrección por Bonferroni el nivel de significancia para cada prueba es de 2.5%, sin embargo por los p-valor persiste la conclusión manifestada previamente.
 
-f. Aplique la prueba T$^2$ de Hotelling para comparar el vector de medias bivariado asumiendo varianzas iguales y un nivel de confianza del 95%.
+f) Aplique la prueba T$^2$ de Hotelling para comparar el vector de medias bivariado asumiendo varianzas iguales y un nivel de confianza del 95%.
 
 $H_0 : [\mu_{d_A}, \mu_{a_A}] = [\mu_{d_B}, \mu_{a_B}]$
 
@@ -430,7 +430,7 @@ PruebaH2
 
 De acuerdo a la prueba T$^2$ de Hotelling no se puede rechazar la hípotesis de igualdad de medias de los dos grupos para las dos variables de interés desde un enfoque bivariado.
 
-g. Utilice la prueba M de Box de Biotools y verifique si ambas matrices de varianzas y covarianzas son estad?sticamente iguales al 95%. (cuide el cálculo de las varianzas en datos angulares). De ser diferentes las varianzas consulte el texto de Wichern para que utilice la prueba de Hotelling para varianzas y covarianzas desiguales y con la ayuda de alguna función en R/Python contraste las hipótesis bivariadas de longitud y ángulo nuevamente.
+g) Utilice la prueba M de Box de Biotools y verifique si ambas matrices de varianzas y covarianzas son estad?sticamente iguales al 95%. (cuide el cálculo de las varianzas en datos angulares). De ser diferentes las varianzas consulte el texto de Wichern para que utilice la prueba de Hotelling para varianzas y covarianzas desiguales y con la ayuda de alguna función en R/Python contraste las hipótesis bivariadas de longitud y ángulo nuevamente.
 
 ```{r}
 ## Matriz de varianzas y covarianzas metodo A
@@ -456,14 +456,14 @@ T2.test(data.a[,-3], data.b[,-3], method = "c")
 
 Observandose que cuando se indica que la matriz de covarianza no es igual, aumenta el p-valor, no obstante se mantiene la misma conclusión sobre que si existe igualdad de vector de medias entre los dos grupos de datos.
 
-h. Realice algún gráfico radial o de datos circulares para visualizar el comportamiento de los ángulos y simultáneamente visualice las distancias.
+h) Realice algún gráfico radial o de datos circulares para visualizar el comportamiento de los ángulos y simultáneamente visualice las distancias.
 
 ```{r}
 ggplot(data=datos5, aes(x=angulo, y=distancia, col=disp, group=disp)) + geom_point() + coord_polar()
 
 ```
 
-i. Si ambos dispositivos se comportan igual para ambas medidas (es decir no se rechazó $H_o$ bivariada, utilice el análisis de regresión lineal para ajustar un modelo para estimar la distancia a partir del ángulo. ¿Vale la pena este ajuste? Ajuste el mismo modelo con el inverso de la distancia y compare resultados. ¿Como a mayor distancia la medida de longitud se puede tornar más imprecisa, valdría ponderar el ángulo por el inverso de la distancia para obtener el ángulo promedio de todas las medidas? Realice el cálculo ponderado y compare con la media aritmética usual del ángulo. Explique estos resultados.
+i) Si ambos dispositivos se comportan igual para ambas medidas (es decir no se rechazó $H_o$ bivariada, utilice el análisis de regresión lineal para ajustar un modelo para estimar la distancia a partir del ángulo. ¿Vale la pena este ajuste? Ajuste el mismo modelo con el inverso de la distancia y compare resultados. ¿Como a mayor distancia la medida de longitud se puede tornar más imprecisa, valdría ponderar el ángulo por el inverso de la distancia para obtener el ángulo promedio de todas las medidas? Realice el cálculo ponderado y compare con la media aritmética usual del ángulo. Explique estos resultados.
 
 Debido a que no se pudo rechazar la $H_o$ de igualdad de medias, se realiza un modelo lineal entre la distancia y el ángulo:
 

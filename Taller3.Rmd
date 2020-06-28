@@ -23,9 +23,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introducci贸n
 
-A continuaci贸n se presentan una serie de ejercicios propuesto que permitiran interiorizar el an谩lisis de datos multivariados utilizandos las t茅cnicas ANOVA y MANOVA. Estos ejercicios hacen parte del contenido acad茅mico desarrollado por el profesor Aquiles Enrique Darghan Contreras referente a la asignatura de M茅todos Multivariados.
+A continuaci髇 se presentan una serie de ejercicios propuesto que permitiran interiorizar el an醠isis de datos multivariados utilizandos las t茅cnicas ANOVA y MANOVA. Estos ejercicios hacen parte del contenido acad茅mico desarrollado por el profesor Aquiles Enrique Darghan Contreras referente a la asignatura de M閠odos Multivariados.
 
-Previo a la soluci贸n de los ejercicios es necesario instalar y cargar las siguientes librer铆as.
+Previo a la soluci髇 de los ejercicios es necesario instalar y cargar las siguientes librer韆s.
 
 ```{r message=FALSE, include=TRUE}
 library(readxl)
@@ -89,7 +89,7 @@ Reflectancia <- read_excel("D:/metodos/Datos_ANOVA_MANOVA.xlsx")
 
 # Punto 1: MANOVA
 
-Para el an谩lisis se realizan las gr谩ficas para cada longitud de onda y un gr谩fico de dispersi贸n que muestre la relaci贸n de las dos:
+Para el an醠isis se realizan las gr醘icas para cada longitud de onda y un gr醘ico de dispersi髇 que muestre la relaci髇 de las dos:
 
 ```{r}
 ggplot(data=Reflectancia, aes(Species,D_560nm)) + geom_point() + ggtitle("Comportamiento Firma 560 nm") + xlab("Especies") + ylab("Reflectancia")
@@ -99,7 +99,7 @@ ggplot(data=Reflectancia, aes(Species,D_720nm)) + geom_point() + ggtitle("Compor
 ggplot(data=Reflectancia, aes(D_560nm,D_720nm, color=Species)) + geom_point() + ggtitle("Comportamiento Firma 560 nm vs 720 nm")
 ```
 
-Se procede a realizar el an谩lisis MANOVA y se presenta un resumen del mismo con la hipotesis con el test de *Wilks*
+Se procede a realizar el an醠isis MANOVA y se presenta un resumen del mismo con la hipotesis con el test de *Wilks*
 
 ```{r}
 MN=manova(cbind(Reflectancia$D_560nm,Reflectancia$D_720nm) ~ Reflectancia$Species)
@@ -122,20 +122,20 @@ summary(AV2)
 
 Se concluqye que Las especies no contribuyen significativamente a cada una de las bandas analizadas.
 
-# Punto 3: Test de Correlaci贸n
+# Punto 3: Test de Correlaci髇
 
-A continuaci贸n es realizado el test de correlaci贸n de *Pearson*
+A continuaci髇 es realizado el test de correlaci髇 de *Pearson*
 
 ```{r}
 cor.test(Reflectancia$D_560nm,Reflectancia$D_720nm)
 ```
 
-Observandose que si existe relaci贸n lineal entre las dos variables, por lo tanto no se puede asumir que sea nula la correlaci贸n.
+Observandose que si existe relaci髇 lineal entre las dos variables, por lo tanto no se puede asumir que sea nula la correlaci髇.
 
 
 # Punto 4: Normalidad univariada
 
-A continuaci贸n es realizado el test de *Shapiro-Wilk* para cada una de las respuestas
+A continuaci髇 es realizado el test de *Shapiro-Wilk* para cada una de las respuestas
 
 ```{r}
 shapiro.test(Reflectancia$D_560nm)
@@ -146,7 +146,7 @@ No se puede asumir normalidad en alguna de las dos variables.
 
 # Punto 5: Normalidad multivariada
 
-A continuaci贸n es realizado el test multivariado de *Shapiro-Wilk*
+A continuaci髇 es realizado el test multivariado de *Shapiro-Wilk*
 
 ```{r}
 mvShapiro.Test(as.matrix(Reflectancia[,1:2]))
@@ -156,7 +156,7 @@ No se puede asumir normalidad multivariada.
 
 # Punto 6: Igualdad de Varianza Univariante
 
-A continuaci贸n es realizado el test multivariado de *Barlett*
+A continuaci髇 es realizado el test multivariado de *Barlett*
 
 ```{r}
 bartlett.test(Reflectancia$D_560nm ~ Reflectancia$Species)
@@ -167,7 +167,7 @@ Existe igualdad de varianza en los valores de reflectancia en los valores dados 
 
 # Punto 7: Igualdad de matrices de varianza y covarianza
 
-Para evaluar la igualdad de la matriz de varianza y covarianza fue realizado el test de *Box*
+Para evaluar la igualdad de la matriz de varianza y covarianza fue realizado el test M de *Box*
 
 ```{r}
 boxM(as.matrix(Reflectancia[,-3]),as.matrix(Reflectancia$Species))
@@ -177,10 +177,10 @@ Concluyendo que no es posible asumir que las matrices de varianza y covarianza p
 
 # Punto 8: Outliers univariados
 
-Se realiz贸 un gr谩fico box-plot para cada uno de los valores de longitud de onda y tambi茅n fue realizada la prueba de *Dixon* que tambi茅n hace la identificaci贸n de los valores at铆picos:
+Se realiza un gr醘ico box-plot para cada uno de los valores de longitud de onda y tambi閚 fue realizada la prueba de *Dixon* que tambi閚 hace la identificaci髇 de los valores at韕icos:
 
 ```{r}
-#Gr谩ficas Box-clot
+#Gr醘icas Box-clot
 
 ggplot(data=Reflectancia, aes(Species,D_560nm)) + geom_boxplot() + ggtitle("Comportamiento Firma 560 nm") + xlab("Especies") + ylab("Reflectancia")
 
@@ -192,5 +192,5 @@ dixon.test(sample(Reflectancia$D_560nm, size=30))
 dixon.test(sample(Reflectancia$D_720nm, size=30))
 ```
 
-Viendo que para la longitud de onda de 560 no existen valores at铆picos mientr谩s que para el de 720 nm si para la especie SS.
+Viendo que para la longitud de onda de 560 no existen valores at韕icos mientr醩 que para el de 720 nm si para la especie SS.
 
