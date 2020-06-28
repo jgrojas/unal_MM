@@ -3,17 +3,17 @@ title: "Taller 2: Análisis ANOVA-MANOVA"
 author: "JRojas, MRamirez, LRomero"
 date: "6/24/2020"
 output:
-  pdf_document: default
-  bookdown::html_document2:
-    number_sections: no
-    toc: yes
-    toc_depth: 1
-    toc_float: yes
   html_document:
     df_print: paged
     toc: yes
     toc_depth: '1'
     toc_float: yes
+  bookdown::html_document2:
+    number_sections: no
+    toc: yes
+    toc_depth: 1
+    toc_float: yes
+  pdf_document: default
 ---
 
 
