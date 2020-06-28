@@ -1,5 +1,5 @@
 ---
-title: "Taller 2: AnÃ¡lisis ANOVA-MANOVA"
+title: "Taller 2: Análisis ANOVA-MANOVA"
 author: "JRojas, MRamirez, LRomero"
 date: "6/24/2020"
 output:
@@ -83,7 +83,7 @@ Los datos se encuentran disponibles en un archivo de [google sheets](https://doc
 Como primer paso los datos son cargados a la variable denominada *Reflectancia*
 
 ```{r}
-Reflectancia <- read_excel("D:/metodos/Datos_ANOVA_MANOVA.xlsx")
+Reflectancia <- read_excel("Datos_ANOVA_MANOVA.xlsx")
 ```
 
 
