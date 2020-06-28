@@ -344,7 +344,7 @@ eebdma <- sd(medias.a.ang-medias.b.ang)
 eecang <- c((mean(medias.a.ang)-mean(medias.b.ang))/pdang$statistic);eecang
 ########## calculando el estadastico t bootstrap
 tbootdist <- abs((mean(medias.a.dist)-mean(medias.b.dist))/eebdm)
-pvalor_bootdist <- pt(tboot,n.datos[1]+n.datos[2]-2,lower.tail = F)
+pvalor_bootdist <- pt(tbootdist,n.datos[1]+n.datos[2]-2,lower.tail = F)
 tbootang <- abs((mean(medias.a.ang)-mean(medias.b.ang))/eebdma)
 pvalor_bootangt <- pt(tbootang,n.datos[1]+n.datos[2]-2,lower.tail = F)
 
