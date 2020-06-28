@@ -221,4 +221,4 @@ Lo anterior arrojo como resultado que los datos poseen 4 datos multivariados.
 
 # Punto 10: Comparación de medias por cada respuesta
 
-Para observar los valores atípicos multivariados es realizado a partir del estadístico T$^2$ y comparado con el percentil que este posee con la distribución chi cuadrado.
+
