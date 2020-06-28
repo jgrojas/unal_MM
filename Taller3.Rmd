@@ -3,17 +3,17 @@ title: "Taller 2: AnÃ¡lisis ANOVA-MANOVA"
 author: "JRojas, MRamirez, LRomero"
 date: "6/24/2020"
 output:
-  html_document:
-    df_print: paged
-    toc: yes
-    toc_depth: '1'
-    toc_float: yes
+  pdf_document: default
   bookdown::html_document2:
     number_sections: no
     toc: yes
     toc_depth: 1
     toc_float: yes
-  pdf_document: default
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: '1'
+    toc_float: yes
 ---
 
 
@@ -21,9 +21,9 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# IntroducciÃ³n
+# Introducción
 
-A continuación se presentan una serie de ejercicios propuesto que permitiran interiorizar el análisis de datos multivariados utilizandos las tÃ©cnicas ANOVA y MANOVA. Estos ejercicios hacen parte del contenido acadÃ©mico desarrollado por el profesor Aquiles Enrique Darghan Contreras referente a la asignatura de Métodos Multivariados.
+A continuación se presentan una serie de ejercicios propuesto que permitiran interiorizar el análisis de datos multivariados utilizandos las técnicas ANOVA y MANOVA. Estos ejercicios hacen parte del contenido académico desarrollado por el profesor Aquiles Enrique Darghan Contreras referente a la asignatura de Métodos Multivariados.
 
 Previo a la solución de los ejercicios es necesario instalar y cargar las siguientes librerías.
 
@@ -194,3 +194,31 @@ dixon.test(sample(Reflectancia$D_720nm, size=30))
 
 Viendo que para la longitud de onda de 560 no existen valores atípicos mientrás que para el de 720 nm si para la especie SS.
 
+# Punto 9: Outliers multivariados
+
+Para observar los valores atípicos multivariados es realizado a partir del estadístico T$^2$ y comparado con el percentil que este posee con la distribución chi cuadrado.
+
+```{r}
+vec.medias=apply(Reflectancia[,1:2],2,mean);vec.medias
+T2=c()
+for(j in 1:dim(Reflectancia)[1]){
+  T2[j]=c((t(t(Reflectancia[j,1:2])-(vec.medias)))%*%solve(var(Reflectancia[,1:2]))%*%as.matrix(t(Reflectancia[j,1:2])-(vec.medias)))
+}
+T2
+LS=qchisq(0.95,df=dim(Reflectancia)-1)
+colores=ifelse(T2>LS,"darkred","darkgreen")
+plot(T2,col=colores,pch=19,cex=0.85,xlab="Observación")
+grid(20,20,col="lightblue")
+abline(h=LS)
+etiquetas=which(T2>LS)
+text(etiquetas,c(LS)+0.4,"outlier")
+plot(Reflectancia$D_560nm,Reflectancia$D_720nm,pch=19,col=colores)
+grid(20,20,col="lightblue")
+
+```
+
+Lo anterior arrojo como resultado que los datos poseen 4 datos multivariados.
+
+# Punto 10: Comparación de medias por cada respuesta
+
+Para observar los valores atípicos multivariados es realizado a partir del estadístico T$^2$ y comparado con el percentil que este posee con la distribución chi cuadrado.
