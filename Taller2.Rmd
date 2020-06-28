@@ -43,6 +43,7 @@ library(ICSNP)
 library(biotools)
 library(rrcov)
 library(ergm)
+library(ggplot2)
 
 ```
 
@@ -383,12 +384,11 @@ sa <- var(data.a)
 data.b <- as.matrix((filter(datos5[, 1:2], disp == "B")), ncol = 2)
 sb <- var(data.b)
 ## Prueba M de Box
-boxM(dft2i[,-3],dft2i[,3])
+boxM(data.a, data.b)
 
-approx.hotelling.diff.test(datos5a[,-3], datos5b[,-3], mu0 = 0, assume.indep = T, var.equal = T)
+approx.hotelling.diff.test(data.a[,-3], data.b[,-3], mu0 = 0, assume.indep = T, var.equal = T)
 
-T2.test(datos5a[,-3],
-        datos5b[,-3], method = "c")
+T2.test(data.a[,-3], data.b[,-3], method = "c")
 ```
 
 
