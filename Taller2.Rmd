@@ -1,5 +1,5 @@
 ---
-title: "prueba de hipótesis en R"
+title: "Pruebas de hipótesis en R"
 author: "JRojas, MRamirez, LRomero,ADarghan"
 date: "6/24/2020"
 output:
@@ -33,10 +33,25 @@ A continuación se presentan una serie de ejercicios que permitiran interiorizar
 
 El desarrollo del taller hace parte del contenido académico elaborado por el profesor Aquiles Enrique Darghan Contreras para la materia de de Métodos Multivariados.
 
-Previo a la solución de los ejercicios es necesario instalar y cargar las siguientes librerías.
+Previo a la solución de los ejercicios es necesario instalar y cargar las siguientes librerías y funciones diseñadas para el análisis.
 
 ```{r message=FALSE, include=TRUE}
-library("kableExtra")
+library(dplyr)
+library(kableExtra)
+library(ggplot2)
+library(ICSNP)
+library(biotools)
+library(rrcov)
+library(ergm)
+library(ggplot2)
+
+```
+
+```{r message=FALSE}
+pajust <- function(hipotesis,alfa){
+  pvalor = 1-((1-alfa)^(1/hipotesis))
+  return(pvalor)
+}
 ```
 
 # Prueba t-Una muestra.  
@@ -82,14 +97,405 @@ c) ¿Cuánto debería ser n en la expresión de la prueba t para que el error es
 
 Si los datos son mediciones, la primera prueba no tendría sentido porque solo es una media. En este caso la primera prueba estaría asumiendo que cada medición es una valor promedio diferente y no una medición. Para que el error estándar Bootstrap tenga sentido deberíamos tener más repeticiones y valores promedios de diferentes conjuntos de datos.
 
+# Prueba t - Dos muestras independientes
+
+Se midió un ángulo en seis series en una condición atmosférica particular utilizando un instrumento especializado, pero usando dos operarios simultáneamente. Los datos de las medidas angulares fueron:
 
 
+```{r echo=FALSE}
+table=data.frame(M1=character(),M2=character(),M3=character(),M4=character(),M5=character(),M6=character(),M7=character(),M8=character(),stringsAsFactors=FALSE)
+table[1,]=0;table[2,]=0;
+table$M1[1]="Operario X";table$M2[1]="112°47’34’’";table$M3[1]="112°44’39’’";table$M4[1]="113°01’34’’";table$M5[1]="112°57’30’’";table$M6[1]="113°00’14’’";table$M7[1]="111°59’58’’";table$M8[1]="112°09’58’’"
 
+table$M1[2]="Operario Y";table$M2[2]="113°47’24’’";table$M3[2]="112°14’39’’";table$M4[2]="112°01’34’’";table$M5[2]="112°17’32’’";table$M6[2]="113°10’04’’";table$M7[2]="112°19’18’’";table$M8[2]="112°59’48’";
 
+kable(table, col.names = NULL) %>% kable_styling(bootstrap_options = c("striped", "hover"))
+```
 
+a) Determinar al 95% de nivel de confianza si las dos medias obtenidas por los operarios son estadísticamente iguales. Utilice la información del artículo mostrado en clase para decidir si las varianzas pueden considerarse iguales o no.
 
+```{r}
+#Crear el dataframe con la información de operarios
+set.seed(2020);options(digits = 9)
+opx<-c(112.7927778,	112.7441667,	113.0261111,	112.9583333,	113.0038889,	111.9994444,	112.1661111) 
+opy<-c(113.79,112.2441667,112.0261111,112.2922222,113.1677778,112.3216667,112.9966667)
+data=c(opx,opy)
+operario <- gl(2, 7, 14, labels = c("operariox", "operarioy"))
+df_oper <- data.frame(data,operario)
+```
 
+Definición de la hipótesis nula:
 
+\[h_o: \bar{x}_{operario} = \bar{y}_{operario}\]
 
+```{r}
+####### estadisticas descriptivas por grupo
+grupos <- group_by(df_oper, operario)
+summarise(grupos, media = mean(data, na.rm = T), desv = sd(data,na.rm=T),cv = desv*100/media, muestra = length(data))
+```
 
+1. Seleccionar datos por operario y generar valores repetidos de cada operario 
+
+```{r}
+#Crear Datos por  operario
+dataX <- c(filter(df_oper, operario == "operariox"));
+dataY <- c(filter(df_oper, operario == "operarioy"));
+
+n.datos <- with(df_oper, summary(operario)) #cada tamano de muestra
+B = 1000 #repeticiones Bootstrap 
+#las submuestras de cada metodo
+met.x <- with(df_oper,matrix(sample(opx,size = n.datos[1]*B,replace = TRUE), B, n.datos[1]))
+met.y <- with(df_oper,matrix(sample(opy,size = n.datos[2]*B,replace = TRUE), B, n.datos[2]))
+dim(met.x)
+dim(met.y)
+```
+
+2. Estimar las medias de las submuestras y calcular el vector de diferencia de medias
+
+```{r}
+####### las medias de las submuestras
+medias.x <- apply(met.x, 1, mean)
+medias.y <- apply(met.y, 1, mean)
+######## el vector de diferencia de medias
+stat.boot <- medias.x - medias.y 
+length(stat.boot)
+```
+
+3. Gráfica de la distribución de diferencia de medias
+
+```{r}
+ggplot(data.frame(x = stat.boot), aes(x = x)) + geom_density()+
+  labs(x = "diferencia de medias")+labs(y = "densidad")+
+  labs(title = "Distribución de la diferencia de medias",
+       subtitle = "Comparación de los dos operarios")+
+  labs(caption = "(datos suministrados en clase)")+
+  geom_vline(xintercept =0,col="azure4")
+
+```
+
+4. Cálculo del error estandar bootstrap y del error estandar convencional
+
+```{r}
+eebdm <- sd(stat.boot); eebdm   # error bootstrap
+pruebat <- t.test(medias.x,medias.y, alternative = "two.sided",  mu=0, conf.level = 0.95);
+eec <- c((mean(medias.x)-mean(medias.y))/pruebat$statistic);eec
+```
+
+5. Comparar ambos errores
+
+```{r}
+veces <- eebdm/eec;veces
+
+# Cálculo del estadastico t bootstrap
+tboot <- abs((mean(medias.x)-mean(medias.y))/eebdm)
+# Obtener el p-valor del estadístico
+pvalor_boot <- pt(tboot,n.datos[1]+n.datos[2]-2,lower.tail = F)
+pvalor_boot
+pvalor_usual <- pruebat$p.value
+pvalor_usual
+```
+
+6. Graficar y aplicar la correción de Bonferroni
+
+```{r}
+curve(dt(x, 46), from = -5, to = 5, col = "orange",xlab = "cuantil t", ylab = "densidad", lwd = 2)
+legend("topleft", legend = paste0("DF = ", 46),col = "sky blue",lty = 1, lwd = 2)
+tt0025 <- qt(0.025,46,lower.tail = FALSE)
+tt0975 <- qt(0.025,46,lower.tail = TRUE)
+abline(h = 0, col = "darkgoldenrod2")
+segments(tt0025, 0, tt0025, dt(tt0025,df = 46))
+segments(-tt0025, 0, -tt0025, dt(tt0025,df = 46))
+qbonf <- qt(pajust(2, 0.05)/2, 46, lower.tail = F)
+segments(qbonf, 0, qbonf, dt(qbonf, df = 46), col = "darkblue")
+segments(-qbonf, 0, -qbonf, dt(qbonf, df = 46), col = "darkblue")
+
+```
+
+# Prueba t-Dos muestras dependientes
+
+Suponga del problema anterior que se seleccionó como mejor operario aquel que generó el menor coeficiente de variación de las mediciones angulares y se utilizó en el siguiente estudio. Ahora se generaron las mismas 6 medidas, pero una a las 10 de la mañana y otra a las 12 del mediodía, cuando la temperatura se había incrementado 5° C. Los datos se muestran a continuación:
+
+```{r echo=FALSE}
+table=data.frame(M1=character(),M2=character(),M3=character(),M4=character(),M5=character(),M6=character(),M7=character(),M8=character(),stringsAsFactors=FALSE)
+table[1,]=0;table[2,]=0;
+table$M1[1]="10:00 am";table$M2[1]="110°17’14’’";table$M3[1]="110°41’19’’";table$M4[1]="110°11’14’’";table$M5[1]="111°00’30’’";table$M6[1]="110°08’24’’";table$M7[1]="110°19’38’’";table$M8[1]="110°09’58’’"
+
+table$M1[2]="12:00 m";table$M2[2]="111°17’24’’";table$M3[2]="110°44’39’’";table$M4[2]="110°21’11’’";table$M5[2]="111°17’32’’";table$M6[2]="113010’14’’";table$M7[2]="110°29’28’’";table$M8[2]="110°20’08’’";
+
+kable(table, col.names = NULL) %>% kable_styling(bootstrap_options = c("striped", "hover"))
+
+```
+
+Determinar al 95% de nivel de confianza si se incrementó la medida angular en las dos horas registradas. Haga una representación gráfica radial para ilustrar el comportamiento de ambas medidas.
+
+1. Ingreso de datos y contrucción del dataframe
+
+```{r}
+am=c(110.2872222,110.6886111,110.1872222,111.0083333,110.14,110.3272222,110.1661111)
+m=c(111.29,110.7441667,110.3530556,111.2922222,113.1705556,110.4911111,110.3355556)
+data=c(am,m)
+hora <- gl(2, 7, 14, labels = c("10:00 am", "12:00 m"))
+temp <- gl(2, 7, 14, labels = c(10, 15))
+df_hora <- data.frame(data,temp,hora)
+```
+2. Seleccionar datos de acuerdo a la hora 
+
+```{r}
+n.datos <- with(df_hora, summary(hora)) #cada tamano de muestra
+B = 1000 #repeticiones Bootstrap 
+met.10 <- with(df_hora,matrix(sample(am,size = n.datos[1]*B,replace = TRUE), B, n.datos[1]))
+met.12 <- with(df_oper,matrix(sample(m,size = n.datos[2]*B,replace = TRUE), B, n.datos[2]))
+dim(met.10)
+dim(met.12)
+```
+3. Estimar las medias de las submuestras y calcular el vector de diferencia de medias
+
+```{r}
+####### las medias de las submuestras
+medias.10 <- apply(met.10, 1, mean)
+medias.12 <- apply(met.12, 1, mean)
+######## el vector de diferencia de medias
+stat.boot <- medias.12 - medias.10 
+length(stat.boot)
+```
+
+4. Gráficar la distribucion de la diferencia de medias
+
+```{r}
+ggplot(data.frame(x = stat.boot), aes(x = x)) + geom_density()+ coord_polar() + labs(x = "diferencia de medias")+labs(y = "densidad") + labs(title = "Distribucion de la diferencia de medias",subtitle = "Comparacion de los dos horarios")+labs(caption = "(datos suministrados en clase)")
+``` 
+
+5. Realizar la prueba-t con dos muestras
+
+```{r}
+pruebat<-t.test(medias.12,medias.10, alternative = "greater",  mu=0, conf.level = 0.95, pared=TRUE) 
+pruebat
+```
+
+# Función distribución uniforme
+
+Construya una función basada en la distribución Uniforme[0,1] para que genere medidas angulares entre 0°0’0’’ y 360°0’0’’. Construya un histograma circular generando una muestra de 500 medidas angulares.
+
+```{r}
+angulalet <- function(nm){
+  x<-runif(nm,0,360)
+  return(x)
+}
+sm=angulalet(500)
+ggplot(data.frame(x = sm), aes(x = x)) + geom_density()+ coord_polar() +   labs(x = "Medidas angulares aleatorias")+labs(y = "Densidad")+   labs(title = "Distribucion de la medidas angulares aleatorias")
+```
+
+# Prueba F para el cociente de dos varianzas
+ 
+Una línea de base se observa repetidamente usando un instrumento EDM durante un período de tiempo. Cada día se hacen 10 observaciones y se promedian. Las varianzas de las observaciones se enumeran a continuación. 
+
+```{r echo=FALSE}
+table=data.frame(M1=character(),M2=character(),M3=character(),M4=character(),M5=character(),M6=character(),M7=character(),M8=character(),stringsAsFactors=FALSE)
+table[1,]=0;table[2,]=0;
+table$M1[1]="Dia";table$M2[1]="1";table$M3[1]="2";table$M4[1]="3";table$M5[1]="4";table$M6[1]="5"
+
+table$M1[2]="Varianza";table$M2[2]=50;table$M3[2]=61;table$M4[2]=51;table$M5[2]=53;table$M6[2]=50
+
+kable(table, col.names = NULL) %>% kable_styling(bootstrap_options = c("striped", "hover"))
+
+```
+
+A un nivel de confianza del 95%, ¿los resultados del día 2 son estadísticamente diferentes de los del día 5?
+
+```{r}
+var_d2=61
+var_d5=50
+coc=var_d2/var_d5;
+
+#Prueba F
+ftest=qf(0.05,9,9,lower.tail = F) 
+
+if(coc > ftest){
+  result="Se rechaza la hipotesis nula de igualdad de varianzas";result 
+} else {
+  result="No se puede rechaza la hipotesis nula de igualdad de varianzas";result
+}
+```
+
+# Prueba T$^2$ Una muestra. 
+
+Se están probando dos dispositivos que permiten medir el ángulo recto y la distancia a una serie de puntos en un transecto. La figura muestra la situación:
+
+![Toma de datos](Taller2_img\T2.png)
+
+La siguiente tabla muestra los datos de toma:
+
+![Datos](Taller2_img\tabla.png)
+
+Por lo anterior se procede a cargar los datos que se encuentran en la tabla mostrada, haciendo acotación de que los valores angulares deben ser convertidos a valores decimales:
+
+```{r}
+distancia=c(100.02,200.12,300.08,399.96,419.94,519.99,620.04,720.08,100.06,199.45,298.08,398.96,420.15,520.02,621.01,721.11)
+angulo=c(90.004444444, 90.002222222, 89.996666667, 90.017222222, 89.996666667, 90.005555556, 89.993333333, 90.001666667, 90.035833333, 90.021111111, 90.988333333, 89.017222222, 89.835555556, 89.038888889, 89.165555556, 89.029444444)
+disp <- gl(2, 8, 16, labels = c("A", "B"))
+datos5=data.frame(distancia,angulo,disp)
+datos5a=datos5[1:8,]
+datos5b=datos5[9:16,]
+```
+
+A partir de los datos presentados, se proponen la realización de los siguientes ejercicios:
+
+a) Realice la prueba t-Student de forma convencional para dos muestras independientes y saque las conclusiones por separado de la comparación de las medias de longitud y ángulos para ambos dispositivos (sea cuidadoso al momento de obtener varianzas en ángulos). Utilice un nivel de confianza del 95% en cada caso.
+
+```{r}
+pda1=t.test(datos5a$distancia,datos5b$distancia, alternative = "two.sided", var.equal = T, mu=0, conf.level = 0.95)
+pda1
+pda2=t.test(datos5a$angulo,datos5b$angulo, alternative = "two.sided", var.equal = T, mu=0, conf.level = 0.95)
+pda2
+
+```
+
+Para los dos casos no se puede rechazar la hipotesis nula de igualdad de medias, es decir que las medias de los dos grupos pueden asumirse como iguales.
+
+b) Compare los resultados anteriores con el resultado actualizado si utilizara la corrección de Bonferroni.
+
+```{r}
+pajust <- function(hipotesis,alfa){
+  pvalor = 1-((1-alfa)^(1/hipotesis))
+  return(pvalor)
+}
+crrb=pajust(2, 0.05) ## C?lculo del nuevo nivel de significancia por Bonferroni
+crrb
+crrb=1-crrb ## Nivel de Confianza con Bonferroni
+crrb
+```
+
+A pesar de que es más exigente por corrección de Bonferroni (nivel de confianza de 97.5%), aún no se puede rechazar las hípotesis nulas debido a que los p-valor de las pruebas son mayores a 0.10, es decir mucho más que el nivel de significancia.
+
+c) Obtenga el coeficiente de correlación para este tipo de datos (Pearson) sin discriminar por dispositivo.
+
+```{r}
+cor(datos5$distancia,datos5$angulo)
+```
+
+Según el índice de correlación existe una leve relación lineal negativa entre las dos variables.
+
+d) Estime el error estándar para la diferencia de media por método Bootstrap para ajustar la prueba t con este error y compare con el resultado sin el método Bootstrap.
+
+```{r}
+n.datos <- with(datos5, summary(disp)) #cada tamano de muestra
+B = 1000 #repeticiones Bootstrap 
+#las submuestras de cada metodo
+met.a.dist <- with(datos5a,
+              matrix(sample(datos5a$distancia,
+                            size = n.datos[1]*B,
+                            replace = TRUE), B, n.datos[1]))
+met.a.ang <- with(datos5a,
+                   matrix(sample(datos5a$angulo,
+                                 size = n.datos[1]*B,
+                                 replace = TRUE), B, n.datos[1]))
+met.b.dist <- with(datos5b,
+              matrix(sample(datos5b$distancia,
+                            size = n.datos[1]*B,
+                            replace = TRUE), B, n.datos[2]))
+met.b.ang <- with(datos5b,
+                  matrix(sample(datos5b$angulo,
+                                size = n.datos[1]*B,
+                                replace = TRUE), B, n.datos[2]))
+
+medias.a.dist<- apply(met.a.dist, 1, mean)
+medias.a.ang<- apply(met.a.ang, 1, mean)
+medias.b.dist <- apply(met.b.dist, 1, mean)
+medias.b.ang<- apply(met.b.ang, 1, mean)
+
+pdistd<-t.test(medias.a.dist,medias.b.dist,alternative = "two.sided",0, conf.level = 0.95, var.equal = F) 
+pdistd
+pdang<-t.test(medias.a.ang,medias.b.ang,alternative = "two.sided", mu=0, conf.level = 0.95) 
+pdang
+
+```
+
+Con Bootstrap se observa que se rechaza la hipotesis de igualdad de medias para la variable de ángulos, mientras que en distancia persiste la misma conclusión.
+
+e) Use el resultado anterior y ajuste además con la corrección de Bonferroni.
+
+Por corrección por Bonferroni el nivel de significancia para cada prueba es de 2.5%, sin embargo por los p-valor persiste la conclusión manifestada previamente.
+
+f) Aplique la prueba T$^2$ de Hotelling para comparar el vector de medias bivariado asumiendo varianzas iguales y un nivel de confianza del 95%.
+
+$H_0 : [\mu_{d_A}, \mu_{a_A}] = [\mu_{d_B}, \mu_{a_B}]$
+
+```{r}
+Z=as.matrix(datos5[,1:2])
+g=as.matrix(datos5[,3])
+
+PruebaH2 <- HotellingsT2(Z~g, mu = c(0,0)) ##
+PruebaH2
+```
+
+De acuerdo a la prueba T$^2$ de Hotelling no se puede rechazar la hípotesis de igualdad de medias de los dos grupos para las dos variables de interés desde un enfoque bivariado.
+
+g) Utilice la prueba M de Box de Biotools y verifique si ambas matrices de varianzas y covarianzas son estad?sticamente iguales al 95%. (cuide el cálculo de las varianzas en datos angulares). De ser diferentes las varianzas consulte el texto de Wichern para que utilice la prueba de Hotelling para varianzas y covarianzas desiguales y con la ayuda de alguna función en R/Python contraste las hipótesis bivariadas de longitud y ángulo nuevamente.
+
+```{r}
+## Matriz de varianzas y covarianzas metodo A
+data.a <- as.matrix((filter(datos5[, 1:2], disp == "A")), ncol = 2)
+sa <- var(data.a)
+sa
+## Matriz de varianzas y covarianzas metodo B
+data.b <- as.matrix((filter(datos5[, 1:2], disp == "B")), ncol = 2)
+sb <- var(data.b)
+sb
+## Prueba M de Box
+boxM(datos5[,1:2], datos5[,3])
+
+```
+
+De acuerdo a la prueba M de Box no se puede asumir que las matrices de varianzas y covarianzas son iguales, por lo anterior se buscaron otras funciones de R que de las librerias *ergm* y *rrcov* que permiten realizar la prueba T$^2$ de Hotelling indicando este aspecto
+
+```{r}
+approx.hotelling.diff.test(data.a[,-3], data.b[,-3], mu0 = 0, assume.indep = T, var.equal = F)
+
+T2.test(data.a[,-3], data.b[,-3], method = "c")
+```
+
+Observandose que cuando se indica que la matriz de covarianza no es igual, aumenta el p-valor, no obstante se mantiene la misma conclusión sobre que si existe igualdad de vector de medias entre los dos grupos de datos.
+
+h) Realice algún gráfico radial o de datos circulares para visualizar el comportamiento de los ángulos y simultáneamente visualice las distancias.
+
+```{r}
+ggplot(data=datos5, aes(x=angulo, y=distancia, col=disp, group=disp)) + geom_point() + coord_polar()
+
+```
+
+i) Si ambos dispositivos se comportan igual para ambas medidas (es decir no se rechazó $H_o$ bivariada, utilice el análisis de regresión lineal para ajustar un modelo para estimar la distancia a partir del ángulo. ¿Vale la pena este ajuste? Ajuste el mismo modelo con el inverso de la distancia y compare resultados. ¿Como a mayor distancia la medida de longitud se puede tornar más imprecisa, valdría ponderar el ángulo por el inverso de la distancia para obtener el ángulo promedio de todas las medidas? Realice el cálculo ponderado y compare con la media aritmética usual del ángulo. Explique estos resultados.
+
+Debido a que no se pudo rechazar la $H_o$ de igualdad de medias, se realiza un modelo lineal entre la distancia y el ángulo:
+
+```{r}
+model1=lm(datos5$distancia ~ datos5$angulo)
+summary(model1) 
+```
+
+De acuerdo de la prueba t para cada variable y la prueba F del modelo de regresión, el modelo posee significancia para un nivel de confianza del 95%, pero se acerca bastante al valor permitido, además los valores de R$^2$ indican que el modelo no posee algún grado de significado, por la proporción de la varianza explicado.  
+
+Por lo anterior, se ópto realizar el segundo modelo propuesto (inverso de la distancia)
+
+```{r}
+model2=lm(1/datos5$distancia ~ datos5$angulo)
+summary(model2)
+```
+
+El modelo mejora considerablemente, pero aún no es del todo adecuado.
+
+Se calculan los valores ponderados por el inverso de la distancia:
+
+```{r}
+datos5a$inversdis=1/datos5a$distancia
+datos5a$angulopond=datos5a$inversdis*datos5a$angulo
+datos5b$inversdis=1/datos5b$distancia
+datos5b$angulopond=datos5b$inversdis*datos5b$angulo
+cor(datos5b$angulopond,datos5a$angulopond)
+mean(datos5a$angulopond)
+mean(datos5a$angulo)
+mean(datos5b$angulopond)
+mean(datos5b$angulo)
+```
+
+Se observa que los valores ponderados por el inverso de la distancia tienen una correlación lineal cercana a 1, además de que las medias ponderadas para los dos grupos son casi identicas, siendo esta conclusión un poco más confusa si se realizará a partir de las medias usuales de solamente el ángulo, puesto que la ponderada posee implicita la contribución de la distancia.
 
