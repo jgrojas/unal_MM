@@ -2803,7 +2803,20 @@ library(biotools)</code></pre>
 <pre><code>## Warning: package &#39;sp&#39; was built under R version 3.6.3</code></pre>
 <pre><code>## ---
 ## biotools version 3.1</code></pre>
-<pre class="r"><code>library(outliers)</code></pre>
+<pre class="r"><code>library(outliers)
+library(ICSNP)</code></pre>
+<pre><code>## Warning: package &#39;ICSNP&#39; was built under R version 3.6.3</code></pre>
+<pre><code>## Warning: package &#39;mvtnorm&#39; was built under R version 3.6.2</code></pre>
+<pre><code>## Warning: package &#39;ICS&#39; was built under R version 3.6.3</code></pre>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## Warning: package &#39;tidyverse&#39; was built under R version 3.6.3</code></pre>
+<pre><code>## Warning: package &#39;tibble&#39; was built under R version 3.6.3</code></pre>
+<pre><code>## Warning: package &#39;tidyr&#39; was built under R version 3.6.3</code></pre>
+<pre><code>## Warning: package &#39;readr&#39; was built under R version 3.6.3</code></pre>
+<pre><code>## Warning: package &#39;purrr&#39; was built under R version 3.6.3</code></pre>
+<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 3.6.3</code></pre>
+<pre><code>## Warning: package &#39;stringr&#39; was built under R version 3.6.3</code></pre>
+<pre><code>## Warning: package &#39;forcats&#39; was built under R version 3.6.3</code></pre>
 <div id="datos" class="section level2">
 <h2>Datos</h2>
 <p>Los ejercicios mostrados son desarrollados a partir de los siguientes datos correspondientes a una toma realizada con un espectroradiometro en los anchos de bandas correspondientes a 560 <em>nm</em> y 720 <em>nm</em> de las especies <em>SS</em>, <em>JL</em> y <em>LP</em></p>
@@ -3032,7 +3045,7 @@ MN</code></pre>
 ## Residuals            33                                        
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>Observandose que se presentan diferencias significativas entre las dos especies</p>
+<p>Observandose que se presentan diferencias significativas entre las dos especies.</p>
 </div>
 <div id="punto-2-anova" class="section level1">
 <h1>Punto 2: ANOVA</h1>
@@ -3142,14 +3155,14 @@ dixon.test(sample(Reflectancia$D_560nm, size=30))</code></pre>
 ##  Dixon test for outliers
 ## 
 ## data:  sample(Reflectancia$D_560nm, size = 30)
-## Q = 0.20462, p-value = 0.8234
-## alternative hypothesis: highest value 44.74 is an outlier</code></pre>
+## Q = 0.68227, p-value &lt; 2.2e-16
+## alternative hypothesis: highest value 37.21 is an outlier</code></pre>
 <pre class="r"><code>dixon.test(sample(Reflectancia$D_720nm, size=30))</code></pre>
 <pre><code>## 
 ##  Dixon test for outliers
 ## 
 ## data:  sample(Reflectancia$D_720nm, size = 30)
-## Q = 0.18658, p-value = 0.9519
+## Q = 0.12098, p-value = 0.5633
 ## alternative hypothesis: highest value 78.57 is an outlier</code></pre>
 <p>Viendo que para la longitud de onda de 560 no existen valores atípicos mientrás que para el de 720 nm si para la especie SS.</p>
 </div>
@@ -3185,6 +3198,167 @@ grid(20,20,col=&quot;lightblue&quot;)</code></pre>
 </div>
 <div id="punto-10-comparación-de-medias-por-cada-respuesta" class="section level1">
 <h1>Punto 10: Comparación de medias por cada respuesta</h1>
+<pre class="r"><code># ESPECIE SS - JL
+
+data.a &lt;- filter(Reflectancia, Species != &quot;LP&quot;)
+PruebaH21 &lt;- HotellingsT2(as.matrix(data.a[,1:2])~as.matrix(data.a[,3]), mu = c(0,0)) ##
+PruebaH21</code></pre>
+<pre><code>## 
+##  Hotelling&#39;s two sample T2-test
+## 
+## data:  as.matrix(data.a[, 1:2]) by as.matrix(data.a[, 3])
+## T.2 = 3.2938, df1 = 2, df2 = 21, p-value = 0.05699
+## alternative hypothesis: true location difference is not equal to c(0,0)</code></pre>
+<pre class="r"><code># ESPECIE SS - LP
+
+data.b &lt;- filter(Reflectancia, Species != &quot;JL&quot;)
+PruebaH22 &lt;- HotellingsT2(as.matrix(data.b[,1:2])~as.matrix(data.b[,3]), mu = c(0,0)) ##
+PruebaH22</code></pre>
+<pre><code>## 
+##  Hotelling&#39;s two sample T2-test
+## 
+## data:  as.matrix(data.b[, 1:2]) by as.matrix(data.b[, 3])
+## T.2 = 2.4676, df1 = 2, df2 = 21, p-value = 0.109
+## alternative hypothesis: true location difference is not equal to c(0,0)</code></pre>
+<pre class="r"><code># ESPECIE JL - LP
+
+data.c &lt;- filter(Reflectancia, Species != &quot;SS&quot;)
+PruebaH23 &lt;- HotellingsT2(as.matrix(data.c[,1:2])~as.matrix(data.c[,3]), mu = c(0,0)) ##
+PruebaH23</code></pre>
+<pre><code>## 
+##  Hotelling&#39;s two sample T2-test
+## 
+## data:  as.matrix(data.c[, 1:2]) by as.matrix(data.c[, 3])
+## T.2 = 4.2569, df1 = 2, df2 = 21, p-value = 0.02806
+## alternative hypothesis: true location difference is not equal to c(0,0)</code></pre>
+<p>De acuerdo a la prueba T<span class="math inline">\(^2\)</span> de Hotelling, bajo un nivel de confianza del 95% no se puede asumir que el vector de medias de las especies JL y LP son iguales, mientras que las especies SS y LP si. No obstante, se debe señalar que la prueba indica que las medias de las especies SS y JL puede decirse que son iguales, pero el p-valor del test se acerca sensiblemente y por consiguiente se debe analizar con más detalle este aspecto.</p>
+</div>
+<div id="punto-11-intervalos-simultaneos-manova." class="section level1">
+<h1>Punto 11: Intervalos simultaneos MANOVA.</h1>
+<p>Se procede a realizar la determinación de los intervalos simultaneos de confianza para cada una de las combinaciones posibles de las especies:</p>
+<pre class="r"><code># DATOS POR CADA ESPECIE
+
+data.SS &lt;- filter(Reflectancia, Species == &quot;SS&quot;)
+data.JL &lt;- filter(Reflectancia, Species == &quot;JL&quot;)
+data.LP &lt;- filter(Reflectancia, Species == &quot;LP&quot;)
+
+# VECTOR DE MEDIAS
+
+vec.mediasSS=apply(data.SS[,1:2],2,mean);vec.mediasSS</code></pre>
+<pre><code>##  D_560nm  D_720nm 
+## 11.54333 30.15167</code></pre>
+<pre class="r"><code>vec.mediasJL=apply(data.JL[,1:2],2,mean);vec.mediasJL</code></pre>
+<pre><code>## D_560nm D_720nm 
+## 21.5550 46.3925</code></pre>
+<pre class="r"><code>vec.mediasLP=apply(data.LP[,1:2],2,mean);vec.mediasLP</code></pre>
+<pre><code>##   D_560nm   D_720nm 
+##  9.805833 30.820000</code></pre>
+<pre class="r"><code># MATRICES DE COVARIANZA
+
+varSS=var(data.SS[,1:2]); varSS</code></pre>
+<pre><code>##           D_560nm   D_720nm
+## D_560nm  9.444588  28.47334
+## D_720nm 28.473339 203.87040</code></pre>
+<pre class="r"><code>varJL=var(data.JL[,1:2]); varJL</code></pre>
+<pre><code>##          D_560nm  D_720nm
+## D_560nm 178.3878 221.8819
+## D_720nm 221.8819 332.1606</code></pre>
+<pre class="r"><code>varLP=var(data.LP[,1:2]); varLP</code></pre>
+<pre><code>##           D_560nm   D_720nm
+## D_560nm  7.414354  27.71932
+## D_720nm 27.719318 149.15058</code></pre>
+<pre class="r"><code># PARÁMETROS DEL INTERVALO
+
+vec.mediasTotal=apply(Reflectancia[,1:2],2,mean);vec.mediasTotal</code></pre>
+<pre><code>##  D_560nm  D_720nm 
+## 14.30139 35.78806</code></pre>
+<pre class="r"><code>t1=vec.mediasSS-vec.mediasTotal
+t2=vec.mediasJL-vec.mediasTotal
+t3=vec.mediasLP-vec.mediasTotal
+W=(dim(data.SS)[1]-1)*varSS+(dim(data.JL)[1]-1)*varJL+(dim(data.LP)[1]-1)*varLP; W</code></pre>
+<pre><code>##          D_560nm  D_720nm
+## D_560nm 2147.714 3058.820
+## D_720nm 3058.820 7536.997</code></pre>
+<pre class="r"><code>pt=qt((0.05/(2*3*(3-1))),df=(dim(Reflectancia)[1]-3)); pt</code></pre>
+<pre><code>## [1] -2.806761</code></pre>
+<pre class="r"><code># INTERVALO ENTRE SS Y JL A UNA LONGITUD DE ONDA DE 560 nm
+
+t.SS_JL.560=t1[1]-t2[1]
+p.SS_JL.560=sqrt(((1/dim(data.SS)[1])+(1/dim(data.JL)[1]))*(W[1,1]/(dim(Reflectancia)[1]-3)))
+(limsup.SS_JL.560=t.SS_JL.560+p.SS_JL.560)</code></pre>
+<pre><code>##   D_560nm 
+## -6.718182</code></pre>
+<pre class="r"><code>(liminf.SS_JL.560=t.SS_JL.560-p.SS_JL.560)</code></pre>
+<pre><code>##   D_560nm 
+## -13.30515</code></pre>
+<pre class="r"><code># INTERVALO ENTRE SS Y JL A UNA LONGITUD DE ONDA DE 720 nm
+
+t.SS_JL.720=t1[2]-t2[2]
+p.SS_JL.720=sqrt(((1/dim(data.SS)[1])+(1/dim(data.JL)[1]))*(W[2,2]/(dim(Reflectancia)[1]-3)))
+(limsup.SS_JL.720=t.SS_JL.720+p.SS_JL.720)</code></pre>
+<pre><code>##  D_720nm 
+## -10.0711</code></pre>
+<pre class="r"><code>(liminf.SS_JL.720=t.SS_JL.720-p.SS_JL.720)</code></pre>
+<pre><code>##   D_720nm 
+## -22.41057</code></pre>
+<pre class="r"><code># INTERVALO ENTRE SS Y LP A UNA LONGITUD DE ONDA DE 560 nm
+
+t.SS_LP.560=t1[1]-t3[1]
+p.SS_LP.560=sqrt(((1/dim(data.SS)[1])+(1/dim(data.LP)[1]))*(W[1,1]/(dim(Reflectancia)[1]-3)))
+(limsup.SS_LP.560=t.SS_LP.560+p.SS_LP.560)</code></pre>
+<pre><code>##  D_560nm 
+## 5.030985</code></pre>
+<pre class="r"><code>(liminf.SS_LP.560=t.SS_LP.560-p.SS_LP.560)</code></pre>
+<pre><code>##   D_560nm 
+## -1.555985</code></pre>
+<pre class="r"><code># INTERVALO ENTRE SS Y LP A UNA LONGITUD DE ONDA DE 720 nm
+
+t.SS_LP.720=t1[2]-t3[2]
+p.SS_LP.720=sqrt(((1/dim(data.SS)[1])+(1/dim(data.LP)[1]))*(W[2,2]/(dim(Reflectancia)[1]-3)))
+(limsup.SS_LP.720=t.SS_LP.720+p.SS_LP.720)</code></pre>
+<pre><code>##  D_720nm 
+## 5.501403</code></pre>
+<pre class="r"><code>(liminf.SS_LP.720=t.SS_LP.720-p.SS_LP.720)</code></pre>
+<pre><code>##   D_720nm 
+## -6.838069</code></pre>
+<pre class="r"><code># INTERVALO ENTRE JL Y LP A UNA LONGITUD DE ONDA DE 560 nm
+
+t.JL_LP.560=t2[1]-t3[1]
+p.JL_LP.560=sqrt(((1/dim(data.JL)[1])+(1/dim(data.LP)[1]))*(W[1,1]/(dim(Reflectancia)[1]-3)))
+(limsup.JL_LP.560=t.JL_LP.560+p.JL_LP.560)</code></pre>
+<pre><code>##  D_560nm 
+## 15.04265</code></pre>
+<pre class="r"><code>(liminf.JL_LP.560=t.JL_LP.560-p.JL_LP.560)</code></pre>
+<pre><code>##  D_560nm 
+## 8.455682</code></pre>
+<pre class="r"><code># INTERVALO ENTRE JL Y LP A UNA LONGITUD DE ONDA DE 720 nm
+
+t.JL_LP.720=t2[2]-t3[2]
+p.JL_LP.720=sqrt(((1/dim(data.JL)[1])+(1/dim(data.LP)[1]))*(W[2,2]/(dim(Reflectancia)[1]-3)))
+(limsup.JL_LP.720=t.JL_LP.720+p.JL_LP.720)</code></pre>
+<pre><code>##  D_720nm 
+## 21.74224</code></pre>
+<pre class="r"><code>(liminf.JL_LP.720=t.JL_LP.720-p.JL_LP.720)</code></pre>
+<pre><code>##  D_720nm 
+## 9.402764</code></pre>
+<p>A partir de los resultados se puede indicar que para las especies SS y JL, JL y LP son diferentes para las dos longitudes de onda mientras que esta característica es contraría para las especies SS y LP, es decir que estos dos sensores no poseen diferencias estadísticas en las dos longitudes de onda.</p>
+</div>
+<div id="punto-12-inclusión-de-variable-de-bloque-localidades." class="section level1">
+<h1>Punto 12: Inclusión de variable de bloque localidades.</h1>
+<p>Se muestra a continuación el procedimiento para añadir un nuevo factor de bloqueo con el propósito de determinar si este mismo es capaz de cambiar las conclusiones tomadas en los análisis previos.</p>
+<pre class="r"><code>loc=c(rep(&quot;L1&quot;,6),rep(&quot;L2&quot;,6)) #Vector de bloqueo
+Reflectancia_loc=cbind(Reflectancia,loc) 
+Reflect_join=cbind(Reflectancia$D_560nm,Reflectancia$D_720nm)
+
+modM2=manova(Reflect_join~Reflectancia_loc$Species+Reflectancia_loc$loc) 
+summary(modM2, test=&quot;Wilks&quot;)</code></pre>
+<pre><code>##                          Df   Wilks approx F num Df den Df    Pr(&gt;F)    
+## Reflectancia_loc$Species  2 0.57824   4.8834      4     62 0.0017312 ** 
+## Reflectancia_loc$loc      1 0.55955  12.2008      2     31 0.0001235 ***
+## Residuals                32                                             
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>El modelo indica que hay diferencias entre los grupos, lo cual también se evidencio en los análisis previos, es decir que la inclusión de esta variable no cambia de forma significativa las conclusiones realizadas previamente.</p>
 </div>
 
 
