@@ -3136,14 +3136,14 @@ dixon.test(sample(Reflectancia$D_560nm, size=30))</code></pre>
 ##  Dixon test for outliers
 ## 
 ## data:  sample(Reflectancia$D_560nm, size = 30)
-## Q = 0.21882, p-value = 0.727
+## Q = 0.20418, p-value = 0.8265
 ## alternative hypothesis: highest value 44.74 is an outlier</code></pre>
 <pre class="r"><code>dixon.test(sample(Reflectancia$D_720nm, size=30))</code></pre>
 <pre><code>## 
 ##  Dixon test for outliers
 ## 
 ## data:  sample(Reflectancia$D_720nm, size = 30)
-## Q = 0.29833, p-value = 0.3144
+## Q = 0.19185, p-value = 0.9138
 ## alternative hypothesis: highest value 78.57 is an outlier</code></pre>
 <p>Viendo que para la longitud de onda de 560 no existen valores atípicos mientrás que para el de 720 nm si para la especie SS.</p>
 </div>
@@ -3179,7 +3179,6 @@ grid(20,20,col=&quot;lightblue&quot;)</code></pre>
 </div>
 <div id="punto-10-comparación-de-medias-por-cada-respuesta" class="section level1">
 <h1>Punto 10: Comparación de medias por cada respuesta</h1>
-<p>Para observar los valores atípicos multivariados es realizado a partir del estadístico T<span class="math inline">\(^2\)</span> y comparado con el percentil que este posee con la distribución chi cuadrado.</p>
 </div>
 
 
