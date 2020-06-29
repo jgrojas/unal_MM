@@ -255,7 +255,7 @@ t(m)%*%A%*%m
 t(n)%*%A%*%n
 ```
 
-Se observa que con las tres vectores, el resultado es un valor positivo, por lo que si se puede asumir que la matriz se define positiva.
+Se observa que con los tres vectores, el resultado es un valor positivo y se puede asumir que la matriz es positiva.
 
 # Punto 7. 
 
@@ -332,7 +332,7 @@ solve(A)
 -3*solve(B)
 ```
 
-Apesar de que el operador lógico indica que los valores no son iguales, al observar las dos matrices por separado, se ve que se puede considerar que son identicas.
+Apesar de que el operador lógico indica que los valores no son iguales, al observar las dos matrices por separado, se ve que se puede considerar que son idénticas.
 
 # Punto 11. 
 ```{r}
@@ -397,7 +397,7 @@ t(m)%*%A%*%m
 t(n)%*%A%*%n
 ```
 
-El resultado indica que si se puede considerar como una.
+El resultado indica que si se puede considerar cuadrática.
 
 # Punto 14. 
 
