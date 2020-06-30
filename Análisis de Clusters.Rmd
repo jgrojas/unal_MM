@@ -37,7 +37,7 @@ library(corrr)
 
 # Datos
 
-Inicialmente se construirán una serie de datos ajustados para ejemplificar los métodos de clasificación por Cluster.
+Se construirán una serie de datos ajustados para ejemplificar los métodos de clasificación por Cluster.
 
 ```{r message=FALSE, include=TRUE, cache=TRUE}
 x <- c(4, 4.5, 4, 7.5, 7, 6, 5, 5.5, 5, 6)
@@ -57,7 +57,8 @@ ggplot(data = datos, aes(x = as.factor(predictor), y = respuesta,
   theme(legend.position = "bottom")
 ```
 
-Una primera aproximación para determinar la similaridad entre obervaciones es calculando la distancia total entre los puntos. Uno de los métodos más empleados es la distancia euclidiana. Hay que tener en cuenta, que entre más distantes sean dos puntos, más disimilares serán o menos correlacionados serán. 
+Calcular la distancia total entre los puntos es una primera aproximación para determinar la similaridad entre obervaciones. Uno de los métodos más empleados es la distancia euclidiana. Hay que tener en cuenta, que entre más distantes sean dos puntos, más disimilares serán o menos correlacionados serán. 
+
 ```{r message=FALSE, include=TRUE, cache=TRUE}
 x1=matrix(c(x,y))
 x2=matrix(c(x,z))
@@ -293,7 +294,7 @@ fviz_pca_biplot(pca, label="var", habillage=as.factor(CLA$cluster)) +
         legend.key = element_rect(fill = "white"))
 ```
 
-Con este biplot sabemos que la variable "b" es el más representativo para el primer componente y que la variable a es la más representativa para el segundo componente.  
+Con este biplot sabemos que la variable *b* es la más representativa para el primer componente y que la variable *a* es la más representativa para el segundo componente.  
 
 Los métodos que se han presentado hasta ahora son no jerárquicos de Reasignación por centroides (K-means) y por medoides (K-medoides y Clara). Estos métodos categorizan los elementos según un número de Cluster dado. Ahora se presentarán una serie de métodos Jerárquicos que van generando grupos en cada una de las fases del proceso, buscando el número de cluster que hacen una agrupación óptima.
 
@@ -321,7 +322,7 @@ cor(x = mat_dist, cophenetic(hc_euclidea_centroid)) ## Tiene la mayor correlaci�
 cor(x = mat_dist, cophenetic(hc_euclidea_mcquitty))
 ```
 
-De los siete métodos evaluados, el método de centroide es el que tiene mayor correlación (0.538), por lo que es la mejor opción para hacer la clasificación de los datos
+De los siete métodos evaluados, el método de centroide es el que tiene mayor correlación (0.538), por lo que es la mejor opción para hacer la clasificación de los datos.
 
 ```{r message=FALSE, include=TRUE, cache=TRUE}
 set.seed(101)
