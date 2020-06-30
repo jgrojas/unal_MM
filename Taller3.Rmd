@@ -1,6 +1,6 @@
 ---
 title: "Taller 2: Análisis ANOVA-MANOVA"
-author: "JRojas, MRamirez, LRomero"
+author: "MRamirez, JRojas, LRomero,ADarghan"
 date: "6/24/2020"
 output:
   html_document:
@@ -23,7 +23,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introducción
 
-A continuación se presentan una serie de ejercicios propuesto que permitiran interiorizar el análisis de datos multivariados utilizandos las técnicas ANOVA y MANOVA. Estos ejercicios hacen parte del contenido académico desarrollado por el profesor Aquiles Enrique Darghan Contreras referente a la asignatura de Métodos Multivariados.
+A continuación se presenta una serie de ejercicios propuesto que permitiran interiorizar el análisis de datos multivariados utilizandos las técnicas ANOVA y MANOVA. Estos ejercicios hacen parte del contenido académico desarrollado por el profesor Aquiles Enrique Darghan Contreras referente a la asignatura de Métodos Multivariados.
 
 Previo a la solución de los ejercicios es necesario instalar y cargar las siguientes librerías.
 
