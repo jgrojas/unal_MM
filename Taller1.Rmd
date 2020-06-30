@@ -335,6 +335,8 @@ solve(A)
 Apesar de que el operador lógico indica que los valores no son iguales, al observar las dos matrices por separado, se ve que se puede considerar que son idénticas.
 
 # Punto 11. 
+
+Demuestre que el determinante de la matriz diagonal $p$ X $p$ $A= {a_{ij}}$ con $a_{ij}= 0, i \neq j$ es dado por el producto de los elementos de la diagonal; entonces $|A|=a_{11}a_{22}...a_{pp}$
 ```{r}
 
 A<-matrix(c(5,0,0,0,0,1,0,0,0,0,3,0,0,0,4), ncol=4, byrow=TRUE)
@@ -357,6 +359,8 @@ det(A) == product(diag(A))
 ```
 
 # Punto 12. 
+
+Demostrar que el determinante de una patriz $A$ $p$ X $p$ simétrica puede ser expresada por el producto de sus valores propios $\lambda_1,\lambda_2 ...,\lambda_p$; que es, $|A|=\prod^p_{i=1}\lambda_i$  
 ```{r}
 A<-matrix(c(0,1,2,3,1,0,4,5,2,4,0,6,3,5,6,0), ncol=4, byrow=TRUE)
 
@@ -689,8 +693,9 @@ A%*%G2%*%A == A
 #Dado que se cumple la propiedad, podemos afirmar que las matrices G251 y G252 son inversas generalizadas de A25 
 ```
 
+# Bibliografía
 
-
+*Stanley Grossman (2007). Algebra Lineal. McGraw Hill. 761 pp.*
 
 
 

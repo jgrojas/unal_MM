@@ -377,3 +377,7 @@ fviz_dend(x = hc_euclidea_av, k = 2, cex = 0.5,
 ```
 
 Con este método si se evidencia la clasificación en dos grandes clusters, ajustado mejor a estos datos y brindando información de manera más adecuada.
+
+# Bibliografía
+
+*Everitt Brian, Landau Sabine, Leese Morven & Stahl Daniel (2011). Cluster Analysis. Wiley Series in Probability and Statistics. 337 pp.*

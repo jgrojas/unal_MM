@@ -338,4 +338,8 @@ summary(modM2, test="Wilks")
 
 El modelo indica que hay diferencias entre los grupos, lo cual también se evidenció en los análisis previos, es decir que la inclusión de esta variable no cambia de forma significativa las conclusiones realizadas previamente.
 
+# Bibliografía
 
+*Richard A. Johnson & Dean W. Wichern (2014). Comparisons of Several Multivariate Means. In: Richard A. Johnson & Dean W. Applied Multivariate Statistical Analysis. Pearson Prentice Hall. 775 pp.*
+
+*Douglas C. Montgomery (2004). Design and Analysis of Experiments. Editorial Limusa S. A. 692 pp.*
