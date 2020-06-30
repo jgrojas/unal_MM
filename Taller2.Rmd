@@ -22,7 +22,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introducción
 
-A continuación se presentan una serie de ejercicios que permitiran interiorizar los conocimientos aprendidos en relación a pruebas de hipótesis desde R. El documento contiene la solución de 6 ejercicios que hacen énfasis en:
+A continuación se presenta una serie de ejercicios que permitiran interiorizar los conocimientos aprendidos en relación a pruebas de hipótesis desde R. El documento contiene la solución de 6 ejercicios que hacen énfasis en:
 
 * Prueba t - Una muestra
 * Prueba t - Dos muestras independientes
@@ -58,6 +58,7 @@ pajust <- function(hipotesis,alfa){
 Una línea base de longitud calibrada en 955m se midió 10 veces. Cada medida es independiente y se hizo con la misma precisión.
 
 Los datos de las mediciones son:
+
 ```{r echo=FALSE}
 
 med=c(965.1,955.1,954.8,956.2,956.4,957.2,958.1,960.4,953.2,954.8)
@@ -227,7 +228,7 @@ kable(table, col.names = NULL) %>% kable_styling(bootstrap_options = c("striped"
 
 Determinar al 95% de nivel de confianza si se incrementó la medida angular en las dos horas registradas. Haga una representación gráfica radial para ilustrar el comportamiento de ambas medidas.
 
-1. Ingreso de datos y contrucción del dataframe
+1. Ingresar los datos y construir el dataframe
 
 ```{r}
 am=c(110.2872222,110.6886111,110.1872222,111.0083333,110.14,110.3272222,110.1661111)
@@ -237,6 +238,7 @@ hora <- gl(2, 7, 14, labels = c("10:00 am", "12:00 m"))
 temp <- gl(2, 7, 14, labels = c(10, 15))
 df_hora <- data.frame(data,temp,hora)
 ```
+
 2. Seleccionar datos de acuerdo a la hora 
 
 ```{r}
@@ -247,6 +249,7 @@ met.12 <- with(df_oper,matrix(sample(m,size = n.datos[2]*B,replace = TRUE), B, n
 dim(met.10)
 dim(met.12)
 ```
+
 3. Estimar las medias de las submuestras y calcular el vector de diferencia de medias
 
 ```{r}
@@ -258,7 +261,7 @@ stat.boot <- medias.12 - medias.10
 length(stat.boot)
 ```
 
-4. Gráficar la distribucion de la diferencia de medias
+4. Gráficar la distribución de la diferencia de medias
 
 ```{r}
 ggplot(data.frame(x = stat.boot), aes(x = x)) + geom_density()+ coord_polar() + labs(x = "diferencia de medias")+labs(y = "densidad") + labs(title = "Distribucion de la diferencia de medias",subtitle = "Comparacion de los dos horarios")+labs(caption = "(datos suministrados en clase)")
@@ -358,7 +361,7 @@ pajust <- function(hipotesis,alfa){
   pvalor = 1-((1-alfa)^(1/hipotesis))
   return(pvalor)
 }
-crrb=pajust(2, 0.05) ## C?lculo del nuevo nivel de significancia por Bonferroni
+crrb=pajust(2, 0.05) ## Cálculo del nuevo nivel de significancia por Bonferroni
 crrb
 crrb=1-crrb ## Nivel de Confianza con Bonferroni
 crrb
@@ -377,9 +380,9 @@ Según el índice de correlación existe una leve relación lineal negativa entr
 d) Estime el error estándar para la diferencia de media por método Bootstrap para ajustar la prueba t con este error y compare con el resultado sin el método Bootstrap.
 
 ```{r}
-n.datos <- with(datos5, summary(disp)) #cada tamano de muestra
+n.datos <- with(datos5, summary(disp)) #cada tamaño de muestra
 B = 1000 #repeticiones Bootstrap 
-#las submuestras de cada metodo
+#las submuestras de cada método
 met.a.dist <- with(datos5a,
               matrix(sample(datos5a$distancia,
                             size = n.datos[1]*B,
@@ -409,7 +412,7 @@ pdang
 
 ```
 
-Con Bootstrap se observa que se rechaza la hipotesis de igualdad de medias para la variable de ángulos, mientras que en distancia persiste la misma conclusión.
+Con Bootstrap se observa que se rechaza la hipótesis de igualdad de medias para la variable de ángulos, mientras que en distancia persiste la misma conclusión.
 
 e) Use el resultado anterior y ajuste además con la corrección de Bonferroni.
 
@@ -429,7 +432,7 @@ PruebaH2
 
 De acuerdo a la prueba T$^2$ de Hotelling no se puede rechazar la hípotesis de igualdad de medias de los dos grupos para las dos variables de interés desde un enfoque bivariado.
 
-g) Utilice la prueba M de Box de Biotools y verifique si ambas matrices de varianzas y covarianzas son estad?sticamente iguales al 95%. (cuide el cálculo de las varianzas en datos angulares). De ser diferentes las varianzas consulte el texto de Wichern para que utilice la prueba de Hotelling para varianzas y covarianzas desiguales y con la ayuda de alguna función en R/Python contraste las hipótesis bivariadas de longitud y ángulo nuevamente.
+g) Utilice la prueba M de Box de Biotools y verifique si ambas matrices de varianzas y covarianzas son estadísticamente iguales al 95%. (cuide el cálculo de las varianzas en datos angulares). De ser diferentes las varianzas consulte el texto de Wichern para que utilice la prueba de Hotelling para varianzas y covarianzas desiguales y con la ayuda de alguna función en R/Python contraste las hipótesis bivariadas de longitud y ángulo nuevamente.
 
 ```{r}
 ## Matriz de varianzas y covarianzas metodo A
@@ -445,7 +448,7 @@ boxM(datos5[,1:2], datos5[,3])
 
 ```
 
-De acuerdo a la prueba M de Box no se puede asumir que las matrices de varianzas y covarianzas son iguales, por lo anterior se buscaron otras funciones de R que de las librerias *ergm* y *rrcov* que permiten realizar la prueba T$^2$ de Hotelling indicando este aspecto
+De acuerdo a la prueba M de Box no se puede asumir que las matrices de varianzas y covarianzas son iguales, por lo anterior se buscaron otras funciones de R que de las librerias *ergm* y *rrcov* que permiten realizar la prueba T$^2$ de Hotelling indicando este aspecto.
 
 ```{r}
 approx.hotelling.diff.test(data.a[,-3], data.b[,-3], mu0 = 0, assume.indep = T, var.equal = F)
@@ -453,7 +456,7 @@ approx.hotelling.diff.test(data.a[,-3], data.b[,-3], mu0 = 0, assume.indep = T, 
 T2.test(data.a[,-3], data.b[,-3], method = "c")
 ```
 
-Observandose que cuando se indica que la matriz de covarianza no es igual, aumenta el p-valor, no obstante se mantiene la misma conclusión sobre que si existe igualdad de vector de medias entre los dos grupos de datos.
+Obsérvese que cuando se indica que la matriz de covarianza no es igual, aumenta el p-valor, no obstante se mantiene la misma conclusión sobre la existencia de igualdad del vector de medias entre los dos grupos de datos.
 
 h) Realice algún gráfico radial o de datos circulares para visualizar el comportamiento de los ángulos y simultáneamente visualice las distancias.
 
@@ -473,7 +476,7 @@ summary(model1)
 
 De acuerdo de la prueba t para cada variable y la prueba F del modelo de regresión, el modelo posee significancia para un nivel de confianza del 95%, pero se acerca bastante al valor permitido, además los valores de R$^2$ indican que el modelo no posee algún grado de significado, por la proporción de la varianza explicado.  
 
-Por lo anterior, se ópto realizar el segundo modelo propuesto (inverso de la distancia)
+Por lo anterior, se optó realizar el segundo modelo propuesto (inverso de la distancia)
 
 ```{r}
 model2=lm(1/datos5$distancia ~ datos5$angulo)
@@ -496,5 +499,5 @@ mean(datos5b$angulopond)
 mean(datos5b$angulo)
 ```
 
-Se observa que los valores ponderados por el inverso de la distancia tienen una correlación lineal cercana a 1, además de que las medias ponderadas para los dos grupos son casi identicas, siendo esta conclusión un poco más confusa si se realizará a partir de las medias usuales de solamente el ángulo, puesto que la ponderada posee implicita la contribución de la distancia.
+Se observa que los valores ponderados por el inverso de la distancia tienen una correlación lineal cercana a 1. Además, las medias ponderadas para los dos grupos son casi idénticas, siendo esta conclusión un poco más confusa si se realizará a partir de las medias usuales de solamente el ángulo, puesto que la ponderada posee implicitamente la contribución de la distancia.
 
