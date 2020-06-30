@@ -39,7 +39,7 @@ library(tidyverse)
 
 ## Datos
 
-Los ejercicios mostrados son desarrollados a partir de los siguientes datos correspondientes a una toma realizada con un espectroradiometro en los anchos de bandas correspondientes a 560 *nm* y 720 *nm* de las especies *SS*, *JL* y *LP*
+Los ejercicios mostrados son desarrollados a partir de los siguientes datos correspondientes a una toma realizada con un espectroradiómetro en los anchos de bandas correspondientes a 560 *nm* y 720 *nm* de las especies *SS*, *JL* y *LP*
 
 D_560nm | D_720nm | Species
 --------| ------- | -------
@@ -110,10 +110,9 @@ summary(MN,test="Wilks")
 
 ```
 
-Observandose que se presentan diferencias significativas entre las dos especies.
+Observese que se presentan diferencias significativas entre las dos especies.
 
 # Punto 2: ANOVA
-
 
 ```{r}
 AV1=aov(Reflectancia$D_560nm ~ Reflectancia$Species)
@@ -122,7 +121,7 @@ AV2=aov(Reflectancia$D_720nm ~ Reflectancia$Species)
 summary(AV2)
 ```
 
-Se concluqye que Las especies no contribuyen significativamente a cada una de las bandas analizadas.
+Se concluye que las especies no contribuyen significativamente a cada una de las bandas analizadas.
 
 # Punto 3: Test de Correlación
 
@@ -132,7 +131,7 @@ A continuación es realizado el test de correlación de *Pearson*
 cor.test(Reflectancia$D_560nm,Reflectancia$D_720nm)
 ```
 
-Observandose que si existe relación lineal entre las dos variables, por lo tanto no se puede asumir que sea nula la correlación.
+Observese que si existe relación lineal entre las dos variables, por lo tanto no se puede asumir que sea nula la correlación.
 
 
 # Punto 4: Normalidad univariada
@@ -175,7 +174,7 @@ Para evaluar la igualdad de la matriz de varianza y covarianza fue realizado el 
 boxM(as.matrix(Reflectancia[,-3]),as.matrix(Reflectancia$Species))
 ```
 
-Concluyendo que no es posible asumir que las matrices de varianza y covarianza por cada una de las especies son iguales.
+Concluyendo: no es posible asumir que las matrices de varianza y covarianza por cada una de las especies son iguales.
 
 # Punto 8: Outliers univariados
 
@@ -194,7 +193,7 @@ dixon.test(sample(Reflectancia$D_560nm, size=30))
 dixon.test(sample(Reflectancia$D_720nm, size=30))
 ```
 
-Viendo que para la longitud de onda de 560 no existen valores atípicos mientrás que para el de 720 nm si para la especie SS.
+Para la longitud de onda de 560 no existen valores atípicos y para la de 720 nm si, en la especie SS.
 
 # Punto 9: Outliers multivariados
 
@@ -219,7 +218,7 @@ grid(20,20,col="lightblue")
 
 ```
 
-Lo anterior arrojo como resultado que los datos poseen 4 datos multivariados.
+Lo anterior arrojó como resultado que los datos poseen 4 datos multivariados.
 
 # Punto 10: Comparación de medias por cada respuesta
 
@@ -324,7 +323,7 @@ p.JL_LP.720=sqrt(((1/dim(data.JL)[1])+(1/dim(data.LP)[1]))*(W[2,2]/(dim(Reflecta
 
 A partir de los resultados se puede indicar que para las especies SS y JL, JL y LP son diferentes para las dos longitudes de onda mientras que esta característica es contraría para las especies SS y LP, es decir que estos dos sensores no poseen diferencias estadísticas en las dos longitudes de onda.
 
-# Punto 12: Inclusión de variable de bloque localidades.
+# Punto 12: Inclusión de variables de bloque localidades.
 
 Se muestra a continuación el procedimiento para añadir un nuevo factor de bloqueo con el propósito de determinar si este mismo es capaz de cambiar las conclusiones tomadas en los análisis previos.
 
@@ -337,6 +336,6 @@ modM2=manova(Reflect_join~Reflectancia_loc$Species+Reflectancia_loc$loc)
 summary(modM2, test="Wilks")
 ```
 
-El modelo indica que hay diferencias entre los grupos, lo cual también se evidencio en los análisis previos, es decir que la inclusión de esta variable no cambia de forma significativa las conclusiones realizadas previamente.
+El modelo indica que hay diferencias entre los grupos, lo cual también se evidenció en los análisis previos, es decir que la inclusión de esta variable no cambia de forma significativa las conclusiones realizadas previamente.
 
 
