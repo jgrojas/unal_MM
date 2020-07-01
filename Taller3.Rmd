@@ -1,5 +1,5 @@
 ---
-title: "Taller 2: Análisis ANOVA-MANOVA"
+title: "Taller 3: Análisis ANOVA-MANOVA"
 author: "MRamirez, JRojas, LRomero,ADarghan"
 date: "6/24/2020"
 output:

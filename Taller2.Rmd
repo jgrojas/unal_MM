@@ -43,7 +43,6 @@ library(ICSNP)
 library(biotools)
 library(rrcov)
 library(ergm)
-
 ```
 
 ```{r message=FALSE}
